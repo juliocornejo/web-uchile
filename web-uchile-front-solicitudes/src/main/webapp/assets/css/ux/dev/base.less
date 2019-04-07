@@ -1,0 +1,609 @@
+//out:null
+@import "global.less";
+
+// ------------------------
+// Estilos por defecto
+// ------------------------
+html,
+body {
+	font-family: 'Lato';
+	font-size: 13px;
+	min-width: 320px;
+	zoom: 1;
+}
+
+a{
+	color: #0af;
+}
+
+// ------------------------
+// Clases colores productos
+// ------------------------
+.color-hoteles {
+	color: @color-hoteles;
+}
+
+.color-vuelos {
+	color: @color-vuelos;
+}
+
+.color-paquetes {
+	color: @color-paquetes;
+}
+
+.color-cruceros {
+	color: @color-cruceros;
+}
+
+.color-seguros {
+	color: @color-seguros;
+}
+
+.color-hoteles-cmr {
+	color: @color-hoteles;
+}
+
+.color-panoramas-cmr {
+	color: @color-actividades;
+}
+
+.color-actividades {
+	color: @color-actividades;
+}
+
+.color-novios {
+	color: @color-novios;
+}
+
+// ------------------------
+// Clases colores
+// ------------------------
+.color-default,
+.text-default {
+	color: @color-default;
+}
+
+.color-primary,
+.text-primary {
+	color: @color-primary;
+}
+
+.color-success,
+.text-success {
+	color: @color-success;
+}
+
+.color-info,
+.text-info {
+	color: @color-info;
+}
+
+.color-warning,
+.text-warning {
+	color: @color-warning;
+}
+
+.color-alert,
+.text-alert {
+	color: @color-alert;
+}
+
+.color-danger,
+.text-danger {
+	color: @color-danger;
+}
+
+.color-link,
+.text-link {
+	color: @color-link;
+}
+.color-gray{
+	color: @gray-medium;
+}
+
+.vf-star {
+	color: @color-star;
+}
+.help-block{
+	margin-bottom: 0;
+}
+
+.has-warning {
+	@color: lighten(@color-danger, 10%);
+	.checkbox,
+	.checkbox-inline,
+	.control-label,
+	.help-block,
+	.radio,
+	.radio-inline,
+	&.checkbox label,
+	&.checkbox-inline label,
+	&.radio label,
+	&.radio-inline label {
+		color: @color;
+	}
+	.form-control{
+		border-color: @color;
+	}
+}
+
+.has-error {
+	@color: @color-danger;
+	.checkbox,
+	.checkbox-inline,
+	.control-label,
+	.help-block,
+	.radio,
+	.radio-inline,
+	&.checkbox label,
+	&.checkbox-inline label,
+	&.radio label,
+	&.radio-inline label {
+		color: @color;
+	}
+	.form-control{
+		border-color: @color;
+	}
+}
+.has-success {
+	@color: @color-success;
+	.checkbox,
+	.checkbox-inline,
+	.control-label,
+	.help-block,
+	.radio,
+	.radio-inline,
+	&.checkbox label,
+	&.checkbox-inline label,
+	&.radio label,
+	&.radio-inline label {
+		color: @color;
+	}
+	.form-control{
+		border-color: @color;
+	}
+}
+
+// ------------------------
+// Clases generales
+// ------------------------
+.seudo-clear {
+	display: block;
+	height: 0;
+	clear: both;
+	float: none;
+	content: " ";
+}
+
+.clear-left {
+	clear: left;
+}
+
+.clear-right {
+	clear: right;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.t-center {
+	text-align: center;
+}
+
+.t-left {
+	text-align: left;
+}
+
+.t-right {
+	text-align: right;
+}
+
+.block {
+	display: block;
+}
+
+.i-block {
+	display: inline-block;
+}
+
+.inline {
+	display: inline;
+}
+
+.vf-max {
+	max-width: 1349px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.inner-flujo {
+	background-color: @gray-base;
+}
+
+.iframe-header,
+.iframe-footer {
+	width: 100%;
+	border: 0;
+}
+
+.iframe-header {
+	height: 86px;
+}
+
+.iframe-footer {
+	height: 60px;
+}
+
+.row-col-tight {
+	@espacio: 3px;
+	margin-left: -@espacio;
+	margin-right: -@espacio;
+	.col {
+		padding-left: @espacio;
+		padding-right: @espacio;
+	}
+}
+
+.row-col-tight-2x {
+	@espacio: @gutter / 2;
+	margin-left: -@espacio;
+	margin-right: -@espacio;
+	.col {
+		padding-left: @espacio;
+		padding-right: @espacio;
+	}
+}
+
+.ico-sm {
+	//	max-width: 24px;
+	max-height: 24px;
+	width: auto;
+	height: auto;
+}
+.fa.fa-vf-estacionamiento:before {
+	content: " ";
+	background: url(/assets/img/servicios/estacionamiento.svg) no-repeat center center rgba(0, 0, 0, 0);
+	background-size: contain;
+	width: 1.05em;
+	height: 1.05em;
+	display: inline-block;
+	line-height: 1.05em;
+	vertical-align: middle;
+	.border-radius(3px);
+}
+
+.fa.fa-vf-piscina:before {
+	content: " ";
+	background: url(/assets/img/servicios/piscina.svg) no-repeat center center rgba(0, 0, 0, 0);
+	background-size: contain;
+	width: 1.51em;
+	height: 1.05em;
+	display: inline-block;
+	line-height: 1.05em;
+	vertical-align: middle;
+    margin: 0 10px 0 0 !important;
+	.border-radius(3px);
+}
+
+.fa.fa-vf-gym:before {
+	content: " ";
+	background: url(/assets/img/servicios/gym.svg) no-repeat center center rgba(0, 0, 0, 0);
+	background-size: contain;
+	width: 1.3em;
+	height: 1.05em;
+	display: inline-block;
+	line-height: 1.05em;
+	vertical-align: middle;
+    margin: -2px 3px 0 0 !important;
+	.border-radius(3px);
+}
+
+.fa.fa-vf-rest:before {
+	content: " ";
+	background: url(/assets/img/servicios/restaurant.svg) no-repeat center center rgba(0, 0, 0, 0);
+	background-size: contain;
+	width: 1.51em;
+	height: 1.05em;
+	display: inline-block;
+	line-height: 1.05em;
+	vertical-align: middle;
+	.border-radius(3px);
+}
+
+
+
+// ------------------------
+// Formularios
+// ------------------------
+.form-control {
+	&:focus {
+		border-color: @color-info;
+		outline: 0;
+		@result: fade(@color-info, 30%);
+		-webkit-box-shadow: inset 0 1px 1px 0 8px @result, 0 0 8px @result;
+		box-shadow: inset 0 1px 1px 0 8px @result, 0 0 8px @result;
+	}
+	&.input-sm {
+		font-size: 13px;
+	}
+}
+
+// ------------------------
+// Títulos y textos
+// ------------------------
+.tit {
+	color: @color-default;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid #e5e5e5;
+	font-weight: 300;
+	&.h4,
+	&.h5,
+	&.h6 {
+		font-weight: 400;
+	}
+}
+
+.upper {
+	text-transform: uppercase;
+}
+
+// ------------------------
+// Utilidades
+// ------------------------
+
+.dato-franja {
+	background-color: lighten(@color-info, 50%);
+	border-top: 1px solid lighten(@color-info, 40%);
+	&.franja-cmr {
+		background-color: lighten(@color-success, 50%);
+		border-top: 1px solid lighten(@color-success, 40%);
+	}
+}
+
+.dis-table {
+	display: table;
+	width: 100%;
+}
+
+.dis-cell {
+	display: table-cell;
+	vertical-align: middle;
+	float: none;
+}
+
+.img-container {
+	border: 1px solid @gray-light;
+	.border-radius(4px);
+	figure {
+		border: 5px solid white;
+		overflow: hidden;
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+		@media screen and (min-width: @screen-xs-min) and (max-width: @screen-sm-max) {
+			height: 150px;
+			position: relative;
+			img {
+				position: absolute;
+				top: 50%;
+				-webkit-transform: translate(0, -50%);
+				-ms-transform: translate(0, -50%);
+				-o-transform: translate(0, -50%);
+				transform: translate(0, -50%);
+			}
+		}
+	}
+}
+.ficha-producto{
+	.img-container{
+		figure{
+			@media screen and (min-width: @screen-xs-min) and (max-width: @screen-sm-max) {
+				height: 250px;
+			}
+		}
+	}
+}
+//IDA/VUELTA PARA FA-PLANE
+i.fa.fa-plane {
+	&.plane-go {
+		.transform(rotate(45deg);
+		);
+	}
+	&.plane-back {
+		.transform(rotate(-135deg);
+		);
+	}
+}
+
+// ------------------------
+// Animaciones
+// ------------------------
+@-webkit-keyframes "arc" {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes "arc" {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+//Selector 2
+.select2 {
+	width: 100%!important;
+	padding: 0;
+	.box-size();
+	.box-shadow-full(inset 0 1px 1px rgba(0, 0, 0, .075));
+	.selection {
+		> span {
+			border: 0;
+			height: auto;
+			padding: 6px 10px;
+		}
+		.select2-selection__rendered {
+			padding-left: 0;
+			line-height: inherit;
+		}
+	}
+	&.input-sm {
+		.selection > span {
+			padding: 4px;
+			outline: none;
+		}
+	}
+}
+
+/**
+* (C)Leanest CSS spinner ever
+*/
+
+@container-width: 3em;
+@ancho-spin: .7em;
+@keyframes spin {
+	to {
+		-webkit-transform: rotate(1turn);
+		-ms-transform: rotate(1turn);
+		-o-transform: rotate(1turn);
+		transform: rotate(1turn);
+	}
+}
+
+.btn-loading{
+	.vf-spinner{
+		display: inline-block;
+	}
+}
+
+.btn-default{
+	@color-spin: #222;
+	.loader:before {
+		@result: fade(@color-spin, 100%);
+		background: @result;
+	}
+
+	.loader:after {
+		@result: fade(@color-spin, 80%);
+		background: @result;
+	}
+
+	.loader > span:before {
+		@result: fade(@color-spin, 60%);
+		background: @result;
+	}
+
+	.loader > span:after {
+		@result: fade(@color-spin, 40%);
+		background: @result;
+	}
+}
+.dato-duracion-dias{
+	background-color: lighten(@color-danger, 30%);
+	color: @color-danger;
+	display: inline-block;
+	font-size: 10px;
+	padding: 1px 2px;
+	vertical-align: bottom;
+	margin-left: 3px;
+	margin-right: 3px;
+}
+.caluga, .ficha-producto {
+	padding: @gutter;
+	background: white;
+	margin-bottom: @gutter;
+	.box-shadow();
+	&.ficha-producto{
+		margin-bottom: @gutter * 2;
+	}
+}
+.caluga-en-ficha{
+	background: transparent;
+	padding: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom: 0;
+}
+
+.head-vf-modal {
+	position: relative;
+	margin-bottom: @gutter;
+	padding-bottom: @gutter;
+	border-bottom: 1px solid @color-success;
+	.tit-head {
+		margin: 0;
+		font-size: 24px;
+	}
+	.vf-close {
+		position: absolute;
+		right: 0;
+		top: -10px;
+	}
+}
+
+//un titulito
+
+.img-bg-cover{
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.img-bg-contain{
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+@media screen and (max-width: @screen-md-max) {
+	body.oflow-mob {
+		overflow: hidden;
+		height: 100vh;
+	}
+}
+
+@media screen and (min-width: @screen-sm-min) {
+	.no-collapse-sm-min {
+		&.collapse,
+		&.collapsing {
+			display: block !important;
+			height: 100% !important;
+		}
+	}
+}
+
+@media screen and (min-width: @screen-md-min) {
+	.iframe-header {
+		height: 141px;
+	}
+	.no-collapse-md-min {
+		&.collapse,
+		&.collapsing {
+			display: block !important;
+			height: 100% !important;
+		}
+	}
+}

@@ -1,0 +1,25 @@
+//out:null
+@import "global.less";
+
+footer.vf-footer-pasos{
+	padding: @gutter;
+	border-top: 1px solid lighten(@color-default, 20%);
+	text-align: center;
+	background: white;
+	img, p{
+		display: inline-block;
+		vertical-align: middle;
+	}
+	p{
+		margin-top: 10px;
+	}
+}
+
+@media screen and (min-width: @screen-sm-min){
+	footer.vf-footer-pasos{
+		text-align: inherit;
+		img{
+			float: right;
+		}
+	}
+}

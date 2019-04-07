@@ -1,0 +1,138 @@
+//out:null
+// /*--------------------------
+// Variables
+// --------------------------*/
+// /* Colores */
+@color-default: #333;
+@color-primary: #197ABB;
+@color-success: #3fae2a;
+@color-info: #197ABB;
+@color-warning: #FFB500;
+@color-alert: #f26228;
+@color-danger: #f03535;
+@color-link: #0af;
+@gray-base: #f9f9f9;
+@gray-dark: #333333;
+@gray-light: #f5f4f5;
+@gray-medium: #666666;
+@color-hoteles: #0b9900;
+@color-vuelos: #0760a8;
+@color-paquetes: #e57505;
+@color-seguros: #d5150b;
+@color-cruceros: #0760a8;
+@color-novios: #dc4747;
+@color-actividades: #98578a;
+@color-star: #ffb500;
+// /* Tamaños */
+//Dispositivos muy pequeños (smartphones y dispositivos antiguos. máximo 480)
+@screen-xs-min: 480px;
+@screen-xs-max: 480px - 1;
+//Dispositivos pequeños (tablets y smartphones horizontales. 768 y superior)
+@screen-sm-min: 768px;
+@screen-sm-max: 768px - 1;
+//Dispositivos medianos (laptops, tablets horizontales. 992px y superior)
+@screen-md-min: 992px;
+@screen-md-max: 992px - 1;
+//Dispositivos grandes (PC de escritorio, grandes monitores. 1200px y superior)
+@screen-lg-min: 1200px;
+@screen-lg-max: 1200px - 1;
+//-----------------------------
+// Variables
+//-----------------------------
+@gutter: 15px;
+// /*--------------------------
+// Mixins (funciones reutilizables)
+// --------------------------*/
+.border-radius (@radius: 8px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	-ms-border-radius: @radius;
+	-o-border-radius: @radius;
+	border-radius: @radius;
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+}
+
+.box-shadow (@x: 1px, @y: 1px, @blur: 6px, @alpha: 0.2) {
+	@val: @x @y @blur rgba(0, 0, 0, @alpha);
+	box-shadow: @val;
+	-webkit-box-shadow: @val;
+	-moz-box-shadow: @val;
+}
+
+.box-shadow-full (@args) {
+	@val: @args;
+	box-shadow: @val;
+	-webkit-box-shadow: @val;
+	-moz-box-shadow: @val;
+}
+
+.opacity (@opacity: 0.5) {
+	-webkit-opacity: @opacity;
+	-moz-opacity: @opacity;
+	opacity: @opacity;
+}
+
+.gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.transition(@what: all;
+	@segs: 0.3s;
+	@type: ease-in-out) {
+		@args : @what @segs @type;
+		-webkit-transition: @args;
+		-o-transition: @args;
+		transition: @args;
+}
+
+.transform(@what) {
+	-webkit-transform: @what;
+	-ms-transform: @what;
+	-o-transform: @what;
+	transform: @what;
+}
+
+.box-size(@arg: border-box) {
+	-webkit-box-sizing: @arg;
+	-moz-box-sizing: @arg;
+	box-sizing: @arg;
+}
+
+.display-flex() {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;
+}
+
+//Custom mixings
+.clearfix() {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+.seudo-clear() {
+	display: block;
+	height: 0;
+	clear: both;
+	float: none;
+	content: " ";
+}
+
+//Clase sombras
+.sombra-caja-flujo() {
+	.box-shadow();
+}

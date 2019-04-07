@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>web-uchile-front-solicitudes</display-name>
+<!--   <filter> -->
+<!--     <filter-name>urlRewriteFilter</filter-name> -->
+<!--     <filter-class>com.manashiki.uchilearte.solicitud.filter.UrlRewriteFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!-- 	    <filter-name>urlRewriteFilter</filter-name> -->
+<!-- 	    <url-pattern>/*</url-pattern> -->
+<!--  </filter-mapping> -->
+  
+  <servlet>
+    <servlet-name>SolicitudRestService</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SolicitudCertificado</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.SolicitudCertificadoController</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+   <servlet>
+    <servlet-name>SolicitudAcademica</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.SolicitudAcademicaController</servlet-class>
+    <load-on-startup>4</load-on-startup>
+  </servlet>  
+  <servlet>
+    <servlet-name>SolicitudPostulaciones</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.SolicitudPostulacionController</servlet-class>
+    <load-on-startup>3</load-on-startup>
+  </servlet>  
+  
+   
+   <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.LoginController</servlet-class>
+    <load-on-startup>5</load-on-startup>
+  </servlet>
+   <servlet>
+    <servlet-name>AdministracionSolicitudCertificado</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.AdministracionSolicitudCertificadoController</servlet-class>
+    <load-on-startup>5</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SolicitudRestService</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SolicitudCertificado</servlet-name>
+    <url-pattern>/certificado/*</url-pattern>
+  </servlet-mapping>
+	
+	  <servlet-mapping>
+    <servlet-name>SolicitudAcademica</servlet-name>
+    <url-pattern>/academica/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SolicitudPostulaciones</servlet-name>
+    <url-pattern>/postulacion/*</url-pattern>
+  </servlet-mapping>
+  	
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/login/*</url-pattern>
+  </servlet-mapping>
+  	
+    <servlet-mapping>
+    <servlet-name>AdministracionSolicitudCertificado</servlet-name>
+    <url-pattern>/administracion-certificado/*</url-pattern>
+  </servlet-mapping>
+	
+<!-- 	  <servlet-mapping> -->
+<!--     <servlet-name>AdministracionSolicitudAcademica</servlet-name> -->
+<!--     <url-pattern>/administracion-academica/*</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>AdministracionSolicitudPostulaciones</servlet-name> -->
+<!--     <url-pattern>/administracion-postulacion/*</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+
+    
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>ServletGodName</servlet-name> -->
+<!--     <url-pattern>/god/*</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+  <welcome-file-list>
+    <welcome-file>main/view/solicitud-certificado.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

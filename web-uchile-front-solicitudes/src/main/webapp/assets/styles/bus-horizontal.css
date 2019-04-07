@@ -1,0 +1,193 @@
+/* Móvil */
+    #buscadorVertical {
+        background: #f7f7f7;
+        padding:15px;
+        width:100%;
+    }
+    .entrada, .salida{
+        width:46%;
+        padding:0;
+    }
+    .salida{
+        margin-left:20px;
+    }
+    .col-habitacion{
+        border-bottom: 0px solid #ccc;
+    }
+    .align-izq {
+        padding-top: 0px;
+    }
+    #buscadorVertical .vf-boton-buscar {
+        background-color: #f26228;
+        color: #fff;
+        border: none;
+        width: 100%;
+        margin-top:0px;
+        border-bottom: 4px solid #DA480D !important;    
+}
+    #buscadorVertical  .vf-boton-buscar:hover,
+    #buscadorVertical  .vf-boton-buscar:focus {
+        background-color: #d65122;
+        color: #fff;
+        outline: none;
+        border-bottom: 4px solid #BF3F0B;
+}
+.vf-menores {
+        background: #dcdcdc!important;
+        padding-top: 4px;
+        width: 91%;
+        padding-left: 1px;
+        padding-right: 1px;
+        margin-left: 15px;
+    }
+.vf-habitaciones {
+    border-top: none;
+}
+
+
+
+@media only screen and (min-width: 768px){
+
+     #buscadorVertical {
+        background: #f7f7f7;
+        padding:15px;
+        width:100%;
+    }
+
+    #buscadorVertical .entrada,
+    #buscadorVertical .salida{
+        width:49%;
+        padding:0px;
+    }
+    #buscadorVertical .salida{
+        margin-left:14px;
+    }
+    #buscadorVertical .vf-boton-buscar {
+        background-color: #f26228;
+        color: #fff;
+        border: none;
+        width: 100%;
+        margin-top:0px;
+        border-bottom: 4px solid #DA480D !important;    
+}
+    #buscadorVertical  .vf-boton-buscar:hover,
+    #buscadorVertical  .vf-boton-buscar:focus {
+        background-color: #d65122;
+        color: #fff;
+        outline: none;
+        border-bottom: 4px solid #BF3F0B;
+}
+
+}
+
+@media only screen and (min-width: 1024px){
+
+     #buscadorVertical {
+        background: #f7f7f7;
+        padding:15px;
+        width:100%;
+    }
+
+    #buscadorVertical .entrada,
+    #buscadorVertical .salida{
+        width:23%;
+        padding:0px;
+        margin-left:6px;
+    }
+    #buscadorVertical .salida{
+        margin-right:6px;
+    }
+    #buscadorVertical .vf-boton-buscar {
+        background-color: #f26228;
+        color: #fff;
+        border: none;
+        width: 100%;
+        margin-top:0px;
+        border-bottom: 4px solid #DA480D !important;    
+    }
+    #buscadorVertical  .vf-boton-buscar:hover,
+    #buscadorVertical  .vf-boton-buscar:focus {
+        background-color: #d65122;
+        color: #fff;
+        outline: none;
+        border-bottom: 4px solid #BF3F0B;
+    }
+
+    #buscadorVertical  .col-habitacion{
+        border-right: 1px solid #ccc;
+        width: 25%;
+    }
+
+    .vf-menores {
+        background: #dcdcdc!important;
+        padding-top: 4px;
+        width: 94%;
+        padding-left: 1px;
+        padding-right: 1px;
+        margin-left: 15px;
+    }
+    #buscadorVertical  .align-izq {
+    float:right;
+    padding-top: 0px;
+}
+
+}
+
+
+@media only screen and (min-width: 1200px){
+
+#buscadorVertical {
+    background: #f7f7f7;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+#buscadorVertical .entrada,
+#buscadorVertical .salida{
+        width:23%;
+    }
+#buscadorVertical .salida{
+        margin-left:22px;
+    }
+
+#buscadorVertical  .align-izq {
+    float:right;
+    padding-top: 0px;
+}
+
+#buscadorVertical  .align-izq button{
+    border:1px solid;
+    margin-top:10px;
+}
+.bloque-habitacion{
+    background: #ebe7e7;
+}
+
+#buscadorVertical  .col-habitacion{
+    border-right: 1px solid #ccc;
+}
+
+#buscadorVertical .vf-boton-buscar {
+    background-color: #f26228;
+    color: #fff;
+    border: none;
+    width: 100%;
+    margin-top:0px;
+    border-bottom: 4px solid #DA480D !important;
+}
+#buscadorVertical  .vf-boton-buscar:hover,
+#buscadorVertical  .vf-boton-buscar:focus {
+    background-color: #d65122;
+    color: #fff;
+    outline: none;
+    border-bottom: 4px solid #BF3F0B;
+}
+.vf-menores{
+    background: #dcdcdc!important;
+    padding-top: 4px;
+    /* width: 98%; */
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+}

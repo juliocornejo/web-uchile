@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:panelGroup layout="block" styleClass="header">
+	
+		<h:panelGroup layout="block" styleClass="cont_iconos_top_menu">
+			<h:panelGroup layout="block" styleClass="contenedo_menu_top">
+				<h:panelGroup layout="block" styleClass="icono_text_menu">
+					<h:panelGroup layout="block" styleClass="icono_top_menu"><p:graphicImage value="/resources/img/candao.png" /></h:panelGroup>
+					<h:panelGroup layout="block" styleClass="text_top_menu"><h:outputText value="Cerrar Sesión" /></h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="icono_text_menu">
+					<h:panelGroup layout="block" styleClass="icono_top_menu"><p:graphicImage value="/resources/img/email.png" /></h:panelGroup>
+					<h:panelGroup layout="block" styleClass="text_top_menu"><h:outputText value="Contacto" /></h:panelGroup>
+				</h:panelGroup>			
+			</h:panelGroup>
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" styleClass="banner">
+			<h:panelGroup layout="block" styleClass="logo"><p:graphicImage value="/resources/img/SSO.jpeg" /></h:panelGroup>
+			<h:panelGroup layout="block" styleClass="titulo_header">
+				<h:panelGroup layout="block" styleClass="titulo_banner_principal"><h2>SINGLE SIGN ON </h2></h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>	
+	</h:panelGroup>
+</ui:composition>

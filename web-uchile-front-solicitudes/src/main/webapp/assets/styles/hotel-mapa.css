@@ -1,0 +1,208 @@
+/* Estilos Hotel en Mapa */
+
+aside{
+    padding: 0 !important;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.content-litado-hoteles{
+    overflow-y:auto;
+    padding:0;
+    max-height: 565px;
+}
+
+.bloque-hotel{
+    padding: 5px 5px 7px 5px;
+    overflow: hidden;
+    border:2px solid #fff;
+}
+
+.bloque-hotel:hover{
+    background: #F2F2F2;
+}
+
+.bloque-hotel .col-md-7,
+.bloque-hotel .col-md-5{
+    padding: 0 !important;
+    /*height: 23px;*/
+}
+
+.bloque-hotel .col-md-5{
+    text-align: right;
+}
+
+.bloque-hotel h1{
+    font-size: 15px !important;
+    font-weight: 600;
+    margin: 0;
+}
+
+.vf-detalle-modificar {
+    display: none;
+}
+
+.bloque-hotel .fa-star{
+    color:#FFB400;
+}
+
+.bloque-hotel .btn-ver-hotel{
+    background: none;
+    border:2px solid #00B200;
+    border-radius: 3px;
+    color:#00B200;
+    padding: 0px 20px 0px 20px;
+}
+
+.tipo-vista{
+    float:right;
+    width:410px;
+    color: #808080;
+    font-weight: 600;
+    padding: 0;
+}
+
+.tit-tipo-vista,
+.tipo-listado,
+.tipo-mapa{
+    float: right;
+    padding: 0;
+    text-align: right;
+}
+
+.tipo-vista .tipo-listado a,
+.tipo-vista .tipo-mapa a,
+i{
+    color: #808080;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.tipo-vista .tipo-listado a:hover,
+.tipo-vista .tipo-mapa a:hover,
+i:hover{
+    color: #000000;
+    text-decoration: none;
+}
+
+.select-habitacion{
+    width:;
+}
+
+.content-filtro-buscador{
+    background:#ffffff;
+    height:62px;
+    margin:7px 0 7px 0;
+}
+
+.filtro-buscador{
+    margin:0 auto !important;
+    width: 100%;
+    max-width:1366px !important;
+    padding-top:10px;
+}
+
+.filtro-buscador .col-md-6{
+    padding: 0;
+}
+
+.filtro-buscador button{
+    background: #E6E6E6;
+    border: 1px solid #E6E6E6;
+    font-size: 14px;
+    color: #333333;
+    padding: 10px 50px 10px 50px; 
+}
+
+.filtro-buscador button:hover{
+    background: #808080;
+    color: #ffffff;
+}
+
+.filtro-buscador .button-active{
+    background: #808080;
+    color: #ffffff;
+}
+
+.vf-habitacion-modifica{}
+
+.vf-habitacion-modificar span{
+    width: 100%;
+    float: left;
+    margin-bottom: 3px;
+}
+
+.vf-habitacion-modificar .form-group{
+    width: 30%;
+    float: left;
+    padding-right: 5px;
+}
+
+.vf-detalle-modificar {
+    padding-bottom: 3px;
+}
+
+.inventario-vistas{
+    background:#ffffff;
+    height:42px;
+    margin:7px 0 7px 0;
+}
+
+.inventario-vistas .col-md-11{
+    margin:0px 0 0 100px;
+    padding-top:10px;
+}
+
+.inventario-vistas .col-lg-11{
+    margin:0px 0 0 0px;
+    padding-top:10px;
+}
+
+.vf-habitacion-modificar {
+    padding-top: 10px;
+    width: 40% !important;
+    margin-right: 1%;
+    background:#eee;
+    margin-bottom: 5px;
+}
+
+.txt-habitacion{
+    float: left;
+    text-align: left;
+    margin-right: 10px;
+    padding: 20px 0 20px 0;
+}
+
+.vf-boton-buscar {
+    background-color: #f26228;
+    color: #fff;
+    border: none;
+    width: 100%;
+    margin-top: 23px;
+    border-bottom:4px solid #DA480D;
+}
+
+.vf-boton-buscar:hover,
+.vf-boton-buscar:focus {
+    background-color: #d65122;
+    color: #fff;
+    outline: none;
+    border-bottom:4px solid #a53507;
+}
+
+.filtro-hotel{
+    padding: 0;
+    border-bottom: 4px solid #f2f2f2;
+}
+
+.vf-filtro-hoteles {
+    background-color: #fff;
+    padding-bottom: 10px;
+    box-shadow: none !important;
+}
+
+.vf-filtro-hoteles h5{
+    background: none;
+    border-bottom: 1px solid #cccccc;
+}

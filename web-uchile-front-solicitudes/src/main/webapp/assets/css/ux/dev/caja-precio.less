@@ -1,0 +1,531 @@
+//out:null
+@import "global.less";
+.bloque-precio {
+	position: relative;
+	font-size: 11px;
+	.precio-contenedor {
+		position: relative;
+	}
+	.btn-cta {
+		margin-top: 5px;
+	}
+	.precio-valor {
+		img {
+			height: 24px;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 2px;
+		}
+	}
+	.cambio-moneda {
+		margin-bottom: 10px;
+		.cambio-moneda-cont {
+			padding-bottom: 5px;
+			border-bottom: 1px solid @gray-light;
+		}
+		.form-group {
+			margin-bottom: 0;
+		}
+		label {
+			font-weight: 400;
+			margin: 0 5px 0 0;
+			font-size: 13px;
+		}
+		label,
+		select {
+			font-size: 13px;
+			display: inline-block;
+			width: auto;
+		}
+		select {
+			height: 28px;
+		}
+	}
+	.precio {
+		.box-size;
+		padding-left: @gutter;
+		padding-right: @gutter;
+		.precio-monto {
+			font-size: 16px;
+			font-weight: bold;
+			display: inline-block;
+			vertical-align: middle;
+			&.precio-cmr {
+				font-size: 22px;
+			}
+		}
+		&.precio-total {
+			border-top: 1px solid lighten(@gray-light, -5%);
+			border-bottom: 1px solid lighten(@gray-light, -5%);
+			background: @gray-light;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			.precio-monto {
+				line-height: 1;
+				font-size: 13px;
+				&.precio-cmr {
+					font-size: 18px;
+				}
+			}
+			img {
+				height: 18px;
+			}
+		}
+		.flecha {
+			margin-left: 5px;
+			font-weight: bold;
+			color: @color-success;
+			font-size: 24px;
+			vertical-align: middle;
+		}
+	}
+	.precio-label {
+		border-right: 0;
+		span {
+			margin-right: 5px;
+		}
+	}
+	.precio-referencia {
+		margin: 5px 0;
+		text-align: left;
+		font-weight: bold;
+	}
+	.precio-label,
+	.precio-valor {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	.precio-antes {
+		margin-bottom: 0;
+		s{
+			text-decoration: none;
+			position: relative;
+			display: inline-block;
+			&:before{
+				content: " ";
+				border-top: 1px solid rgba(0,0,0,0.3);
+				top: 49%;
+				left: 0;
+				right: 0;
+				position: absolute;
+				transform: rotate(-5deg);
+			}
+		}
+	}
+	.precio-detalle {
+		border-top: 1px solid lighten(@gray-light, -5%);
+		.row {
+			margin-top: 3px;
+			margin-bottom: 3px;
+		}
+	}
+	.ver-detalle {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.caja-clasica{
+	.bloque-precio{
+		font-size: 12px;
+		.precio{
+			.precio-monto{
+				font-size: 17px;
+				font-weight: normal;
+			}
+			&.precio-total{
+				padding-bottom: 0;
+				.precio-monto{
+					font-size: 16px;
+					font-weight: bold;
+				}
+			}
+		}
+		.precio-valor{
+			text-align: right;
+		}
+		.precio-referencia{
+			font-weight: normal;
+			font-size: 13px;
+			text-align: center;
+		}
+		.precio-antes{
+			font-size: 13px;
+		}
+		.label-oferta{
+			margin-left: -@gutter;
+			padding-left: @gutter;
+			border-radius: 0;
+		}
+	}
+}
+
+.label-oferta {
+	@alto: 18px;
+	display: inline-block;
+	padding: 0 5px 0 10px;
+	color: white;
+	position: relative;
+	min-height: @alto;
+	line-height: @alto;
+	margin: 0 (@gutter + 5) 5px 0;
+	@color-label-noche: @color-info;
+	@color-label-ninos: @color-success;
+	@color-label-ultimos: @color-danger;
+	.border-radius(4px);
+	&.noche-gratis {
+		background: @color-label-noche;
+		&:after {
+			border: (@alto / 2) solid @color-label-noche;
+		}
+	}
+	&.ninos-gratis {
+		background: @color-label-ninos;
+		&:after {
+			border: (@alto / 2) solid @color-label-ninos;
+		}
+	}
+	&.ultimos-cupos {
+		background: @color-label-ultimos;
+		&:after {
+			border: (@alto / 2) solid @color-label-ultimos;
+		}
+	}
+	.fa {
+		margin-right: 5px;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		display: block;
+		border-right-color: transparent !important;
+		right: -16px;
+		top: 0;
+		-webkit-border-top-right-radius: 4px;
+		-moz-border-top-right-radius: 4px;
+		-ms-border-top-right-radius: 4px;
+		-o-border-top-right-radius: 4px;
+		border-top-right-radius: 4px;
+		-webkit-border-bottom-right-radius: 4px;
+		-moz-border-bottom-right-radius: 4px;
+		-ms-border-bottom-right-radius: 4px;
+		-o-border-bottom-right-radius: 4px;
+		border-bottom-right-radius: 4px;
+		width: @alto;
+		height: @alto;
+	}
+	//SUJERO A CAJA NUEVA LINEA 298
+	&.descuento {
+		min-height: 20px;
+		line-height: 20px;
+		position: absolute;
+		top: 0;
+		border-radius: 0;
+		left: -10px;
+		background: @color-danger;
+		font-size: 15px;
+
+		&:after {
+			border: (@alto / 2) solid @color-danger;
+			height: 20px;
+			width: 18px;
+			-webkit-border-top-right-radius: 0;
+			-moz-border-top-right-radius: 0;
+			-ms-border-top-right-radius: 0;
+			-o-border-top-right-radius: 0;
+			border-top-right-radius: 0;
+			-webkit-border-bottom-right-radius: 0;
+			-moz-border-bottom-right-radius: 0;
+			-ms-border-bottom-right-radius: 0;
+			-o-border-bottom-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}        
+	}
+}
+
+//Caja fixed para mobile
+.caja-fixed{
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 5px;
+	right: 5px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	box-shadow: 0 0 6px rgba(0,0,0,0.5);
+	z-index: 500;
+	padding: 10px @gutter;
+	background: white;
+	.transition(bottom, .4s);
+
+	.precio-min{
+		float: left;
+		.info{
+			color: @color-link;
+			font-size: 0.7em;
+			display: inline-block;
+			vertical-align: middle;
+			.fa-info{
+				color: white;
+			}
+		}
+	} 
+	.btn-cta{
+		width: 130px;
+		float: right;
+		margin-top: 8px;
+	}
+	.ver-detalle-precio{
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		width: 50%;
+		z-index: 10;
+		background: transparent;
+		outline: none;
+	}
+	strong{
+		font-size: 1.3em;
+		line-height: 1em;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	small{
+		display: block;
+	}
+}
+
+@media screen and (max-width: @screen-sm-max) {
+	.caluga-vuelo{
+		.bloque-precio {
+			.row-precio-mob {
+				position: relative;
+				min-height: 80px;
+			}
+			.boton-reserva {
+				//				position: absolute;
+				//				right: 0;
+				//				top: 0;
+				width: 45%;
+				text-align: center;
+				.btn-cta {
+					padding-top: 6px;
+					padding-bottom: 6px;
+					.border-radius(2px);
+					font-size: 14px;
+					line-height: 20px;
+				}
+				.precio-referencia {
+					text-align: center;
+				}
+			}
+		}
+		.precio-contenedor{
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			padding: @gutter;
+			background-color: @gray-light;
+			margin-left: -@gutter;
+			margin-right: -@gutter;
+			.precio,
+			.precio-detalle{
+				width: 50%;
+				margin-right: 5%;
+				float: left;
+			}
+			.precio{
+				@orden: 0;
+				-webkit-order: @orden;
+				-moz-order: @orden;
+				-ms-order: @orden;
+				-o-order: @orden;
+				order: @orden;
+			}
+			.precio-detalle{
+				clear: left;
+				@orden: 2;
+				-webkit-order: @orden;
+				-moz-order: @orden;
+				-ms-order: @orden;
+				-o-order: @orden;
+				order: @orden;
+			}
+			.boton-reserva{
+				float: right;
+				@orden: 1;
+				-webkit-order: @orden;
+				-moz-order: @orden;
+				-ms-order: @orden;
+				-o-order: @orden;
+				order: @orden;
+			}
+		}
+	}
+	.caja-clasica{
+		border-top: 1px solid lighten(@gray-light, -5%);
+		background: @gray-light;
+		padding-top: 5px;
+		//		padding-bottom: 5px;
+		.bloque-precio{
+			.precio-antes{
+				position: absolute;
+				top: -15px;
+				right: 0;
+			}
+		}
+		.dato-precio{
+			border-top: 1px solid #e9e7e9;
+			background: #f5f4f5;
+			padding-top: 5px;
+		}
+		.precio{
+			&.precio-total{
+				border-bottom: none;
+			}
+		}
+		.boton-reserva{
+			margin-left: -@gutter;
+			margin-right: -@gutter;
+			padding-left: @gutter;
+			padding-top: 10px;
+			padding-right: @gutter;
+			background: white;
+			border-top: 1px solid lighten(@gray-light, -5%);
+		}
+	}
+}
+
+@media screen and (min-width: @screen-sm-min) {
+	.bloque-precio {
+		.precio-referencia {
+			text-align: center;
+		}
+		.precio {
+			margin-top: 5px;
+			padding-left: 0;
+			padding-right: 0;
+			.precio-monto {
+				&.precio-cmr {
+					font-size: 22px;
+				}
+			}
+			&.precio-total {
+				.precio-monto {
+					line-height: 30px;
+					font-size: 13px;
+				}
+			}
+		}
+		.caja-total-precio{
+			display: block !important;
+		}
+		.precio-label,
+		.precio-valor {
+			padding-left: @gutter;
+			padding-right: @gutter;
+		}
+		.precio-label {
+			span {
+				margin-right: 0;
+			}
+		}
+		.precio-valor {
+			text-align: right;
+			padding-left: 0;
+		}
+		.precio-referencia {
+			margin: 10px 0;
+			font-size: 12px;
+		}
+	}
+	.caja-clasica{
+		.bloque-precio{
+			.precio-referencia{
+				border-top: 1px solid lighten(@gray-light, -5%);
+				margin: 10px 0 5px;
+				padding-top: 5px;
+			}
+		}
+	}
+}
+
+//CAJA NUEVA
+.dato-precio {
+	&.modelo-center {        
+		.bloque-precio {
+			padding: 10px;
+			background-color: #eee;
+
+			.precio-antes {
+				margin-bottom: 0;
+				height: 18px;
+				margin-bottom: 10px;
+				line-height: 18px;
+			}
+		}
+		.precio-contenedor {
+			text-align: center;
+		}
+		.row-precio-mob {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			&:after, &:before {
+				content: none;
+			}
+
+			>div {
+				width: auto;
+			}
+
+			.precio-label {
+				font-size: 13px;
+				font-weight: normal;
+				color: #4d4d4d;
+				text-align: left;
+			}
+			.precio-valor {
+				text-align: right;
+
+				.precio-monto {
+					font-size: 28px;
+					font-weight: normal;
+				}
+			}
+		}    
+		.label-tax {
+			font-size: 12px;
+			color: #808080;
+		}
+	}
+}
+
+@media screen and (min-width: @screen-sm-min) {
+	.label-oferta.descuento {
+		left: -15px;
+	}
+	.dato-precio {
+		&.modelo-center {    
+			border-left: 1px solid #ddd;
+
+			.bloque-precio {
+				padding: 0;
+				background-color: white;
+			}
+
+			.row-precio-mob {
+				flex-direction: column;
+
+				>div {
+					width: 100%;
+					text-align: center !important;
+				}
+			}
+		}
+	}
+}

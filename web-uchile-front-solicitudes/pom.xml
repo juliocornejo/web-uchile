@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>api.web.uchile</groupId>
+		<artifactId>web-uchile</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>web-uchile-front-solicitudes</artifactId>
+	<packaging>war</packaging>
+	<name>web-uchile-front-solicitudes Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<spring.version>4.0.7.RELEASE</spring.version>
+		<vijnana.version>2.0.0.v</vijnana.version>
+	</properties>
+		
+		
+		
+	<dependencies>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.manashiki.uchilearte</groupId> -->
+<!-- 			<artifactId>uchile-facultad-de-arte-utilidades</artifactId> -->
+<!-- 			<version>1.0.0.a</version> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>api.web.uchile</groupId>
+			<artifactId>web-uchile-articular-session</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.vijnana</groupId> -->
+<!-- 			<artifactId>vijnana.wsrest.client</artifactId> -->
+<!-- 			<version>${vijnana.version}</version> -->
+<!-- 		</dependency>	 -->
+	
+<!-- 		<dependency>	 -->
+<!-- 			<groupId>log4j</groupId> -->
+<!-- 			<artifactId>log4j</artifactId> -->
+<!-- 			<version>1.2.17</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>junit</groupId> -->
+<!-- 			<artifactId>junit</artifactId> -->
+<!-- 			<version>3.8.1</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+       
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-bundle</artifactId>
+			<version>1.19</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>1.19</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+			<version>1.19</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.producto</groupId>  -->
+<!-- 			<artifactId>com.producto.client</artifactId> -->
+<!-- 			<version>1.0.10</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.vf</groupId> -->
+<!-- 			<artifactId>fwk.util</artifactId> -->
+<!-- 			<version>1.1.2</version> -->
+<!-- 		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>api.web.uchile</groupId>
+			<artifactId>web-uchile-articular-session</artifactId>
+			<version>1.0.0</version>
+	</dependency>
+<!-- 		<dependency> -->
+<!--             <groupId>com.parametro</groupId> -->
+<!--             <artifactId>com.parametro.dto</artifactId> -->
+<!--             <version>1.0.2</version> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>com.parametro</groupId> -->
+<!--             <artifactId>com.parametro.client</artifactId> -->
+<!--             <version>1.0.2</version> -->
+<!--         </dependency>		 -->
+		
+	</dependencies>
+<!-- 	<repositories> -->
+<!-- 		<repository> -->
+<!-- 			<id>anguila thirdparty</id> -->
+<!-- 			<url>http://dev.viajesfalabella.cl/artifactory/thirdparty</url> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>anguila central</id> -->
+<!-- 			<url>http://anguila.viajesfalabella.com:8081/nexus/content/repositories/central/</url> -->
+<!-- 		</repository> -->
+<!-- 	</repositories>	 -->
+	
+	<build>
+		<finalName>web-uchile-front-solicitudes</finalName>
+        <plugins>
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>WebContent\WEB-INF\web.xml</webXml>
+                </configuration>
+            </plugin>
+            <plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-war-plugin</artifactId>
+        		<configuration>
+          			<webResources>
+            			<resource>
+             	 			<directory>${build.sourceDirectory}</directory>
+              				<targetPath>sources</targetPath>
+            			</resource>
+          			</webResources>
+        		</configuration>
+      		</plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,75 @@
+@gutter: 15px;
+#documentacion{
+	position: relative;
+	padding-left: 250px + 15px;
+	padding-right: 15px;
+	#side-doc{
+		background: #eee;
+		position: fixed;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 250px;
+		overflow-y: auto;
+	}
+	.header{
+		background:#3fae2a;
+		margin-left: -15px * 2;
+		margin-right: -15px * 2;
+		h1{
+			color: white;
+			font-weight: 300;
+			text-align: center;
+		}
+	}
+	article{
+		margin-bottom: 60px;
+	}
+	._tit{
+		color: #3fae2a;
+		margin-bottom: 30px;
+		font-weight: 300;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #3fae2a;
+	}
+	.menu-lateral{
+		padding: 15px;
+		text-align: right;
+		._tit{
+			margin-bottom: 15px;
+		}
+		ul{
+			padding: 0;
+			margin: 0 0 30px;
+			list-style: none;
+			li{
+				margin-bottom: 5px;
+				padding: 5px;
+			}
+			a{
+				padding: 5px 10px 5px 5px;
+				&.active{
+					border-right: 4px solid #3fae2a;
+					position: relative;
+					margin-right: -4px;
+				}
+			}
+		}
+	}
+	#iconos{
+		.fa{
+			font-size: 28px;
+		}
+	}
+	.bg-example{
+		padding: @gutter;
+	}
+}
+
+@media screen and (min-width: 769px){
+	#documentacion{
+		.menu-lateral{
+//			position: fixed;
+		}
+	}
+}

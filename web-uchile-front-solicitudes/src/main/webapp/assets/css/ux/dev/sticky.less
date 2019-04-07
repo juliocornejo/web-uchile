@@ -1,0 +1,27 @@
+//out:null
+@import "global.less";
+//Estilos especiales para el sticky
+//Al elemento que se quiere fijar, agregar clase "sticky". Al padre de ese elemento, que será referencial para el alto, agregar clase "parent_sitcky".
+.parent-sticky{
+	position: relative;
+	&:after{
+		.seudo-clear;
+	}
+}
+.sticky{
+	position:relative;
+	.sticky-inner{
+		position: relative;
+//		.transition(all, .3s, ease);
+	}
+}
+
+@media screen and (max-width:@screen-sm-max){
+	//Estilos para que "sticky" en versión mobile, se comporte como un elemento normal
+	.sticky{
+		height: auto !important;
+		.sticky-inner{
+			top: auto !important;
+		}
+	}
+}

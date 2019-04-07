@@ -1,0 +1,110 @@
+//out:null
+@import "global.less";
+// ------------------------
+// Clases colores background
+// ------------------------
+.bg-default {
+	@color: @color-default;
+	@color-sat: saturate(@color, -20%);
+	background-color: lighten(@color, 50%);
+	&.bg-msg{
+		background-color: lighten(@color-sat, 70%);
+		color: #222;
+	}
+}
+
+.bg-primary {
+	@color: @color-primary;
+	@color-sat: saturate(@color, -20%);
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 40%);
+		color: #222;
+	}
+}
+
+.bg-success {
+	@color: @color-success;
+	@color-sat: saturate(@color, -20%);;
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 45%);
+		color: #222;
+	}
+}
+
+.bg-info {
+	@color: @color-info;
+	@color-sat: saturate(@color, -20%);;
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 45%);
+		color: #222;
+	}
+}
+
+.bg-warning {
+	@color: @color-warning;
+	@color-sat: saturate(@color, -20%);;
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 40%);
+		color: #222;
+	}
+}
+
+.bg-alert {
+	@color: @color-alert;
+	@color-sat: saturate(@color, -20%);;
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 35%);
+		color: #222;
+	}
+}
+
+.bg-danger {
+	@color: @color-danger;
+	@color-sat: saturate(@color, -20%);;
+	background-color: lighten(@color-sat, 20%);
+	color: white;
+	&.bg-msg{
+		background-color: lighten(@color-sat, 33%);
+		color: #222;
+	}
+}
+
+.bg-pd{
+	padding: @gutter;
+	&.bg-sm{
+		padding: (@gutter / 2) @gutter;
+	}
+	&.bg-xs{
+		padding: (@gutter / 3) @gutter;
+	}
+}
+
+.bg-default,
+.bg-primary,
+.bg-success,
+.bg-info,
+.bg-warning,
+.bg-alert,
+.bg-danger{
+	&.has-icon{
+		padding-left: 65px;
+		min-height: 40px;
+		position: relative;
+		.icon-msg{
+			position: absolute;
+			left: @gutter;
+			top: @gutter;
+		}
+	}
+}
+//#9acc61

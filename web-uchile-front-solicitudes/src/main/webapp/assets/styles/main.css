@@ -1,0 +1,44 @@
+html, body, #map-canvas {
+	height: 100%;
+	width: 100%;
+	margin: 5px;
+}
+
+#map_canvas {
+	position: relative;
+}
+
+.angular-google-map-container {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.mapCanvasStyle {
+	height: 500px;
+	width: 700px;
+	margin: 5px;
+}
+
+#slides_control > div{
+  height: 200px;
+}
+
+img{
+  margin:auto;
+  width: 400px;
+}
+
+#slides_control {
+  position:absolute;
+  width: 400px;
+  left:50%;
+  top:20px;
+ margin-left:-200px;
+}
+.slideHotelImages{
+	height: 300px;
+	width: 500px;
+}

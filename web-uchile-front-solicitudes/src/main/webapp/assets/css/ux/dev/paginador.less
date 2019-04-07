@@ -1,0 +1,18 @@
+//out:null
+@import "global.less";
+.vf-paginador{
+	@color-pag: @color-primary;
+    text-align: center;
+    a{
+        color: @color-default;
+		margin-bottom: 5px;
+		.transition();
+    }
+    li.active{
+        a{
+            border-color: lighten(@color-pag, -5%);
+            background: @color-pag;
+            color: white;
+        }
+    }
+}

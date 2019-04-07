@@ -1,0 +1,91 @@
+//out:null
+@import "global.less";
+// ------------------------
+// Botones
+// ------------------------
+
+.button-style(@color){
+	background-color: @color;
+	color: white;
+	border-color: lighten(@color, -5%);
+
+	&:hover {
+		background-color: lighten(@color, -5%);
+		border-color: lighten(@color, -10%);
+		color: white;
+	}
+	&:active, &:hover:active, &:focus, .active {
+		background-color: lighten(@color, 5%);
+		border-color: @color;
+		color: white;
+	}
+	&[disabled], &[disabled]:hover, &.disabled{
+		background-color: @color;
+		color: white;
+		border-color: lighten(@color, -5%);
+	}
+}
+
+.btn {
+	.border-radius(2px);
+	.transition();
+}
+
+.btn-lg {
+	.border-radius(4px);
+}
+.btn-primary {
+	.button-style(@color-primary);
+}
+.btn-success {
+	.button-style(@color-success);
+}
+.btn-info {
+	.button-style(@color-info);
+}
+.btn-alert {
+	.button-style(@color-alert);
+}
+.btn-warning {
+	.button-style(@color-warning);
+}
+.btn-danger {
+	.button-style(@color-danger);
+}
+.btn-default {
+	@color: @color-default;
+	@result: fade(@color, 20%);
+
+	background-color: transparent;
+	color: @color;
+	border-color: lighten(@color, 50%);
+
+	&:hover, &[disabled], &[disabled]:hover, &.disabled {
+		background-color: @result;
+		border-color: lighten(@color, 30%);
+		color: @color;
+	}
+	&:active, &:hover:active, &:focus, .active,  {
+		background-color: transparent;
+		border-color: lighten(@color, 40%);
+		color: @color;
+	}
+}
+.btn-link{
+	color: @color-info;
+}
+.btn-cta {
+	@color: @color-success;
+	@border-boton: 2px;
+	
+	border-bottom: @border-boton solid lighten(@color, -10%);
+	&:hover{
+		border-bottom: @border-boton solid lighten(@color, -15%);
+	}
+	&:active, &:hover:active, &:focus, .active {
+		border-bottom: @border-boton solid @color;
+	}
+	&[disabled], &[disabled]:hover, &.disabled{
+		border-bottom: @border-boton solid lighten(@color, -10%);
+	}
+}

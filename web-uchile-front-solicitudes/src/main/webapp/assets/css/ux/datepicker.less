@@ -1,0 +1,63 @@
+// compress: true, autoprefixer: true
+@import "global.less";
+//DATEPICKER
+.datepicker {
+    //TABLA DATEPICKER
+    .table-condensed {
+        min-width: 280px;
+        margin: 0 auto 20px;
+        color: @gray-dark;
+        float: none;
+        //FIX-CSS A DESHABILITADOS
+        td.disabled {
+            color: #dedede;
+            pointer-events: none;
+        }
+        th.disabled {
+            visibility: hidden; //FIX VISIBILIDAD
+        }
+        //FIX-CSS SELECTOR MES
+        th.datepicker-switch {
+            pointer-events: none;
+            &:hover,
+            &:focus {
+                background: transparent;
+            }
+        }
+        //TAMAÑO NEXT/PREV
+        th.next,
+        th.prev {
+            font-size: 10px;
+            line-height: 10px;
+        }
+        td {
+            transition: background-color .2s ease;
+            background-color: white;
+            border-radius: 0;
+            &:hover {
+                background-color: lighten;
+            }
+        }
+        //MARCADOR "HOY"
+        td.day.today {
+            background-image: none;
+            background-color: lighten(@color-warning, 40%);
+            &:hover {
+                background-color: lighten(@color-warning, 30%);
+            }
+        }
+        //MARCADOR DÍA ACTIVO
+        td.day.active {
+            background-color: @color-success;
+            color: white;
+            background-image: none;
+            &:hover {
+                background-color: darken(@color-success, 3%);
+            }
+        }
+    }
+    //FECHAS HIGHLIGHT
+    .dia-destacado {
+        border: 1px solid @color-success;
+    }
+}
