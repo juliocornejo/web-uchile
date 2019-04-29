@@ -22,6 +22,8 @@ public class UchileOrquestadorConstantes implements Serializable{
 	
 
 	private static final String rolContexto = "aplicacion";
+	private static final String rolEjecutivo = "ejecutivo";
+	private static final String rolAdministrador = "administrador";
 	private static final String rolUsuario = "usuario";
 	
 //	private static final String aplicacion = "uchile";
@@ -35,7 +37,21 @@ public class UchileOrquestadorConstantes implements Serializable{
 	public UchileOrquestadorConstantes() {
 		super();
 	}
-
+	
+	public static String setRolUsuarioById(int idRol){
+		if(idRol==1){
+			return rolUsuario;
+		}else if(idRol==2){
+			return rolEjecutivo;
+		}else if(idRol==3){
+			return rolAdministrador;
+		}else if(idRol==4){
+			return rolContexto;
+		}
+		return "";
+		
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -73,12 +89,6 @@ public class UchileOrquestadorConstantes implements Serializable{
 		return rolUsuario;
 	}
 
-//
-//	public static String getAplicacion() {
-//		return aplicacion;
-//	}
-
-
 	public static String getIdemailcorreo() {
 		return idEmailCorreo;
 	}
@@ -90,6 +100,10 @@ public class UchileOrquestadorConstantes implements Serializable{
 
 	public static int getLargofirma() {
 		return largoFirma;
+	}
+
+	public static String getRoladministrador() {
+		return rolAdministrador;
 	}
 	
 	

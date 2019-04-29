@@ -18,11 +18,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 //import com.google.gson.Gson;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudCertificadoDTO;
+import com.manashiki.uchilearte.solicitud.response.WrapperFrontResponse;
 
-import vijnana.respuesta.front.response.WrapperFrontResponse;
 import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.utilidades.component.utilidades.JsonMappeo;
 import web.uchile.articular.session.impl.SolicitudCertificadoImpl;
+import web.uchile.articular.session.model.ResponseWebUchile;
 import web.uchile.articular.session.model.SolicitudCertificadoModel;
 
 
@@ -97,14 +98,12 @@ public class AdministracionSolicitudCertificadoService {
 
 				/*hay que validar antes de enivar la información*/
 				try{
-					if(solicitudCertificadoImpl.almacenarSolicitudCertificadoPagoOffline()){
-					data.setOk(true);
-					data.setData("Fue envianda la solicitd de certificado");
+//					if(solicitudCertificadoImpl.almacenarSolicitudCertificadoPagoOffline()){
+//					data.setOk(true);
+					data.setData(new ResponseWebUchile());
 					data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-certificado-exito.jsp");
 					jsonResultado = JsonMappeo.convertirObjectToJson(data);
-					}else{
-						
-					}
+					
 					
 				}catch(Exception e){
 					logger.error("Exception No fue posible enviar la solicitud del certificado. "+e.getMessage(), e);

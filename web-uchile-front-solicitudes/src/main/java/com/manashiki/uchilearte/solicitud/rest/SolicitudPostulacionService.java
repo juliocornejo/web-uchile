@@ -31,12 +31,13 @@ import com.google.gson.Gson;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.ArchivoSolicitudDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.ProgramaUniversidadPostulacionDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudPostulacionDTO;
+import com.manashiki.uchilearte.solicitud.response.WrapperFrontResponse;
 
-import vijnana.respuesta.front.response.WrapperFrontResponse;
 import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.utilidades.component.utilidades.AppDate;
 import vijnana.utilidades.component.utilidades.JsonMappeo;
 import web.uchile.articular.session.impl.SolicitudPostulacionImpl;
+import web.uchile.articular.session.model.ResponseWebUchile;
 import web.uchile.articular.session.model.SolicitudPostulacionModel;
 
 
@@ -64,26 +65,16 @@ public class SolicitudPostulacionService {
 		
 		WrapperFrontResponse wrapper = new WrapperFrontResponse();
 		
-		logger.info("Login de Usuario");
+		logger.info("almacenarSolicitudPostulacionPagoOffline");
 		
 		logger.info(jsonFicha);
 		
-		String data = null;
-		
-		String redireccion = null;
+		ResponseWebUchile data = null;
 		
 		String jsonResultado = "";
 		
-		boolean ok = false;
-		
-		logger.info("Inicio validación de postulación.");
-		
 		logger.info(jsonParametrosBusquedaRequest);
 		
-//		Gson g = new Gson();
-		
-//		WrapperFrontResponse data = new WrapperFrontResponse();
-//		String jsonResultado = "";
 		try {
 			SolicitudPostulacionModel solicitudPostulacionModel = new SolicitudPostulacionModel();
 			
@@ -143,45 +134,9 @@ public class SolicitudPostulacionService {
 				logger.info("################################## Siguiente Paso Almacenar dato ###################################################");
 				
 				try{
-					boolean valido = solicitudPostulacionImpl.almacenarSolicitudPostulacionPagoOffline();
-					if(valido){
-//						data.setEstado("EXITO");
-//						data.setMensaje("Fue envianda la solicitd de certificado");
-//						data.setOk(true);
-//						data.setData("Fue envianda la solicitd de postulacion");
-//						data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-postulacion-exito.jsp");
-//						jsonResultado = JsonMappeo.convertirObjectToJson(data);	
-						data = JsonMappeo.convertirObjectToJson("");
-						
-						redireccion = "web-uchile-front-solicitudes/main/view/solicitud-postulacion-exito.jsp";
-						
-						ok = true;
-					}else{
-//						logger.error("Error en el metodo almacenarSolicitudPostulacionPagoOffline");
-////						data.setEstado("ERROR");
-////						data.setMensaje("Exception en el seteo de los datos para la solicitud de postulacion");
-////						data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-postulacion-error.jsp");
-//						AbstractWrapperError error = new AbstractWrapperError();
-//						error.setCodigo(400);
-//						error.setMensaje("Exception en el seteo de los datos para la solicitud de postulacion");
-//						data.setError(error);
-//						data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-postulacion-error.jsp");
-//						
-//						jsonResultado = JsonMappeo.convertirObjectToJson(data);
-						ok = false;
-					}
+					data = solicitudPostulacionImpl.almacenarSolicitudPostulacionPagoOffline();
+					
 				}catch(Exception e){
-//					logger.error("Exception No fue posible enviar la solicitud del postulacion. "+e.getMessage(), e);
-////					data.setEstado("ERROR");
-////					data.setMensaje("Exception en el seteo de los datos para la solicitud de postulacion");
-////					data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-postulacion-error.jsp");
-//					AbstractWrapperError error = new AbstractWrapperError();
-//					error.setCodigo(400);
-//					error.setMensaje("Exception en el seteo de los datos para la solicitud de postulacion");
-//					data.setError(error);
-//					data.setUrl("web-uchile-front-solicitudes/main/view/solicitud-postulacion-error.jsp");
-//					jsonResultado = JsonMappeo.convertirObjectToJson(data);
-//					return jsonResultado;
 					error = new AbstractWrapperError();
 
 					error.setMensaje("Exception en la obtencion de los datos del negocio"+ e.getMessage());
@@ -189,8 +144,6 @@ public class SolicitudPostulacionService {
 					error.setCodigo(400);
 				}
 			
-			}else{
-				ok = false;
 			}
 		} catch (Exception e) {
 //			logger.error("Exception en el seteo de los datos para la solicitud de certificado: "+e.getMessage(), e);
@@ -213,12 +166,12 @@ public class SolicitudPostulacionService {
 		}		
 		
 		if(error==null){
-			wrapper = new WrapperFrontResponse(new vijnana.respuesta.wrapper.response.AbstractWrapperError(), ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(),
-					this.request.getMethod(), redireccion, data);
+			wrapper = new WrapperFrontResponse(error, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.request.getRequestURL().toString(),
+					this.request.getMethod(), data);
 		}
 		else{
-			wrapper = new WrapperFrontResponse(error, ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(), 
-					this.request.getMethod(), redireccion, data);
+			wrapper = new WrapperFrontResponse(error, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.request.getRequestURL().toString(), 
+					this.request.getMethod(), data);
 		}
 		
 		jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
@@ -322,9 +275,7 @@ public class SolicitudPostulacionService {
 			   ArchivoSolicitudDTO archivoGuardado = (solicitudPostulacionImpl.getArchivoSolicitudPostulacionDTO()!= null) ? solicitudPostulacionImpl.getArchivoSolicitudPostulacionDTO(): null; 
 			   if(archivoGuardado != null){
 				   archivo = g.toJson(archivoGuardado);
-				   res.setCantidadResultados(1);
 				   res.setTiempoRespuesta(archivo);
-				   res.setOk(true);
 				   res.setTipoMetodo("subir_archivo");
 				   return g.toJson(res);
 

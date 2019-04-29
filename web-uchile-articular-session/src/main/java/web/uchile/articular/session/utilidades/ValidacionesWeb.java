@@ -15,8 +15,8 @@ public class ValidacionesWeb {
 
 		boolean validar = false;
 
-		if(loginModel.getPasswordContrasenha()!=null && !loginModel.getPasswordContrasenha().equals("")){
-			if(loginModel.getPasswordConfirmacionContrasenha()!=null && !loginModel.getPasswordConfirmacionContrasenha().equals("")){
+		if(loginModel.getPasswordContrasenha()!=null && !"".equals(loginModel.getPasswordContrasenha())){
+			if(loginModel.getPasswordConfirmacionContrasenha()!=null && !"".equals(loginModel.getPasswordConfirmacionContrasenha())){
 				if(loginModel.getPasswordConfirmacionContrasenha().equals(loginModel.getPasswordContrasenha())){
 					validar = true;
 				}else{
@@ -58,26 +58,21 @@ public class ValidacionesWeb {
 			birthDate = year + "-" + month + "-" + day;
 			if (AppDate.isValidDate(birthDate, AppDate.strFormatoFechaYYYY_MM_DD)) {
 				loginDTO.setFechaNacimientoMember(birthDate);
-				//loginDTO.generoMember - loginDTO.firmaMember - loginDTO.usernamePerfil - loginDTO.nombrePerfilLowerCase - loginDTO.passwordContrasenha - loginDTO.passwordConfirmacionContrasenha - loginDTO.passwordPregunta - loginDTO.respuestaPregunta
-				if(loginDTO.getRutMember()!=null && !loginDTO.getRutMember().equals("") &&loginDTO.getTipoDocumento()!=null && !loginDTO.getTipoDocumento().equals("")){
-//					if(seguridadModelo.validarExistenciaRut(loginDTO.getRutMember(), loginDTO.getTipoDocumento(), tokenAuthenticacionContextSeguridad)){
-						if(loginDTO.getNombreMember()!=null && !loginDTO.getNombreMember().equals("")){
-							if(loginDTO.getApellidoPaternoMember()!=null && !loginDTO.getApellidoPaternoMember().equals("")){
-								if(loginDTO.getFechaNacimientoMember()!=null && !loginDTO.getFechaNacimientoMember().equals("")){
-									if(loginDTO.getTelefonoContactoMember()!=null && !loginDTO.getTelefonoContactoMember().equals("")){
+				if(loginDTO.getRutMember()!=null && !"".equals(loginDTO.getRutMember()) &&loginDTO.getTipoDocumento()!=null && !"".equals(loginDTO.getTipoDocumento())){
+						if(loginDTO.getNombreMember()!=null && !"".equals(loginDTO.getNombreMember())){
+							if(loginDTO.getApellidoPaternoMember()!=null && !"".equals(loginDTO.getApellidoPaternoMember())){
+								if(loginDTO.getFechaNacimientoMember()!=null && !"".equals(loginDTO.getFechaNacimientoMember())){
+									if(loginDTO.getTelefonoContactoMember()!=null && !"".equals(loginDTO.getTelefonoContactoMember())){
 										if(loginDTO.getMailMember()!=null && ValidacionPatrones.validarPatronEmail(loginDTO.getMailMember())){
-//											if(seguridadModelo.validarExistenciaCorreoElectronico(loginDTO.getMailMember(), tokenAuthenticacionContextSeguridad)){
-												if(loginDTO.getGeneroMember()!=null && !loginDTO.getGeneroMember().equals("")){
-													if(loginDTO.getFirmaMember()!=null && !loginDTO.getFirmaMember().equals("")){
-														if(loginDTO.getUsernamePerfil()!=null && !loginDTO.getUsernamePerfil().equals("")){
-//															if(seguridadModelo.validarExistenciaUsernameLogin(loginDTO.getUsernamePerfil(), tokenAuthenticacionContextSeguridad)){
-																if(loginDTO.getNombrePerfilLowerCase()!=null && !loginDTO.getNombrePerfilLowerCase().equals("")){
-//																	if(seguridadModelo.validarExistenciaNombrePerfil(loginDTO.getNombrePerfilLowerCase(), tokenAuthenticacionContextSeguridad)){
-																		if(loginDTO.getPasswordContrasenha()!=null && !loginDTO.getPasswordContrasenha().equals("")){
-																			if(loginDTO.getPasswordConfirmacionContrasenha()!=null && !loginDTO.getPasswordConfirmacionContrasenha().equals("")){
+												if(loginDTO.getGeneroMember()!=null && !"".equals(loginDTO.getGeneroMember())){
+													if(loginDTO.getFirmaMember()!=null && !"".equals(loginDTO.getFirmaMember())){
+														if(loginDTO.getUsernamePerfil()!=null && !"".equals(loginDTO.getUsernamePerfil())){
+																if(loginDTO.getNombrePerfilLowerCase()!=null && !"".equals(loginDTO.getNombrePerfilLowerCase())){
+																		if(loginDTO.getPasswordContrasenha()!=null && !"".equals(loginDTO.getPasswordContrasenha())){
+																			if(loginDTO.getPasswordConfirmacionContrasenha()!=null && !"".equals(loginDTO.getPasswordConfirmacionContrasenha())){
 																				if(loginDTO.getPasswordConfirmacionContrasenha().equals(loginDTO.getPasswordContrasenha())){
-																					if(loginDTO.getPasswordPregunta()!=null && !loginDTO.getPasswordPregunta().equals("")){
-																						if(loginDTO.getRespuestaPregunta()!=null && !loginDTO.getRespuestaPregunta().equals("")){
+																					if(loginDTO.getPasswordPregunta()!=null && !"".equals(loginDTO.getPasswordPregunta())){
+																						if(loginDTO.getRespuestaPregunta()!=null && !"".equals(loginDTO.getRespuestaPregunta())){
 																							validar = true;
 																						}else{
 																							FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso respuesta a pregunta de recuperacion");
@@ -103,10 +98,6 @@ public class ValidacionesWeb {
 																		FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "el nombre de perfil ya habia sido ingresado");
 																		FacesContext.getCurrentInstance().addMessage(null, msg);
 																	}
-//																}else{
-//																	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso nombre del perfil");
-//																	FacesContext.getCurrentInstance().addMessage(null, msg);
-//																}
 															}else{
 																FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "username de login ya habia sido registrado");
 																FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -119,10 +110,6 @@ public class ValidacionesWeb {
 														FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso una descripcion de la persona");
 														FacesContext.getCurrentInstance().addMessage(null, msg);
 													}
-//												}else{
-//													FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se selecciono el genero de la persona");
-//													FacesContext.getCurrentInstance().addMessage(null, msg);
-//												}
 											}else{
 												FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "el Email ya habia sido registrado");
 												FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -143,19 +130,10 @@ public class ValidacionesWeb {
 								FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso apellido paterno de la persona");
 								FacesContext.getCurrentInstance().addMessage(null, msg);
 							}	
-//						}else{
-//							FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso nombre de la persona");
-//							FacesContext.getCurrentInstance().addMessage(null, msg);
-//						}
 					}else{
 						FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "El Rut ya habia sido ingresado anteriormente");
 						FacesContext.getCurrentInstance().addMessage(null, msg);
 					}
-
-//				}else{
-//					FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "No se ingreso rut del usuario");
-//					FacesContext.getCurrentInstance().addMessage(null, msg);
-//				}
 			}else{
 				FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "Fecha de Nacimiento invalida");
 				FacesContext.getCurrentInstance().addMessage(null, msg);

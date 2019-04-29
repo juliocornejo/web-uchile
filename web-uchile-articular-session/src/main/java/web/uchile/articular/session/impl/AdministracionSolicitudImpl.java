@@ -2,37 +2,62 @@ package web.uchile.articular.session.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.ArchivoSolicitudDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.ComunaDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.FinalidadCertificadoDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.ProgramaUniversidadDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.ProgramaUniversidadPostulacionDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.RegionDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudAcademicaDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudCertificadoDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudPostulacionDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.TipoCertificadoDTO;
+import com.manashiki.uchilearte.servdto.dto.entities.formulario.TipoSolicitudDTO;
 import com.manashiki.uchilearte.servdto.request.RequestProductoDTO;
 
+import vijnana.respuesta.wrapper.response.seguridad.BasicContext;
+import vijnana.respuesta.wrapper.response.seguridad.Identificacion;
+import web.uchile.articular.servicio.impl.LoginModelo;
 import web.uchile.articular.servicio.impl.SolicitudesUchileModelo;
+import web.uchile.articular.session.model.LoginModel;
+import web.uchile.articular.session.model.ServicioModel;
+import web.uchile.articular.session.utilidades.AccionesObjetosEstaticos;
 ;
 
-public class AdministracionSolicitudCertificadoImpl {
+public class AdministracionSolicitudImpl {
 
-	private static final Logger objLog = Logger.getLogger(AdministracionSolicitudCertificadoImpl.class);
+	private static final Logger objLog = Logger.getLogger(AdministracionSolicitudImpl.class);
 	/*********************************************/
-	private List<SolicitudCertificadoDTO> listaSolicitudCertificado;
+	private List<ServicioModel> listaServicioModel;
+	
 	private List<ProgramaUniversidadDTO> listaProgramaUniversidad;
+	private List<ProgramaUniversidadPostulacionDTO> listaProgramaUniversidadPostulacion;
 	private List<TipoCertificadoDTO> listaTipoCertificado;
 	private List<FinalidadCertificadoDTO> listaFinalidadCertificado;
-	private SolicitudCertificadoDTO solicitudCertificado;
-	private SolicitudCertificadoDTO verSolicitudCertificado = new SolicitudCertificadoDTO();
+	private List<TipoSolicitudDTO> listaTipoSolicitud;
+	private List<RegionDTO> listaRegion;
+	private List<ComunaDTO> listaComuna;
+	private List<SolicitudCertificadoDTO> listaSolicitudCertificado;
+	private List<SolicitudAcademicaDTO> listaSolicitudAcademica;
+	private List<SolicitudPostulacionDTO> listaSolicitudPostulacion;
+
+	private ArchivoSolicitudDTO archivoSolicitud = new ArchivoSolicitudDTO();
 	
 	private Date fechaInicial;
 	private Date fechaFinal;
@@ -46,10 +71,12 @@ public class AdministracionSolicitudCertificadoImpl {
 	private String remoteHost= "";
 	
 	private GeneracionAplicacion generarAplicacion;
-	
+	private LoginModel loginModel;
 	private String token = "";
+	private String tokenSessionUsuario = "";
 	
-	public AdministracionSolicitudCertificadoImpl(String remoteAddr, String remoteHost, String token){
+	//token debe ser session de la aplicacion.
+	public AdministracionSolicitudImpl(String remoteAddr, String remoteHost, String token, String keySessionUsuario){
 		this.remoteAddr= remoteAddr;
 		this.remoteHost= remoteHost;
 		
@@ -58,6 +85,11 @@ public class AdministracionSolicitudCertificadoImpl {
 			JsonElement json = gson.fromJson(token, JsonElement.class);
 			this.token = json.getAsJsonObject().get("ficha").getAsString();
 		}
+		
+		if(keySessionUsuario!=null){
+			tokenSessionUsuario = keySessionUsuario;
+		}
+		
 	}
 
 	public void llamarRemoteCommandHotel(){
@@ -75,12 +107,58 @@ public class AdministracionSolicitudCertificadoImpl {
 		generarAplicacion = new GeneracionAplicacion(remoteHost, token);
 		
 		if(generarAplicacion.getAuthenticacionContext()!=null){
+			loginModel = obtenerUsuarioLogin();
 			
-			inicializarValoresDTO();
-			generarValoresFormulario();
+			if(loginModel!=null && loginModel.getIdUsuario()>0){
+				inicializarValoresDTO();
+				generarValoresFormulario();
+			}
+			
 		}
 	}
+	
+	//El perfil requerido debe ser administrador o mas
+	public LoginModel obtenerUsuarioLogin() {
+		//Almacenar y redirigir a exito.xhtml
+		LoginModelo loginModelo = new LoginModelo();
+//		UchileArte uchileArte = null;
+//		generarAplicacion.generarLoginUsuario( loginDTO.getUsernamePerfil(), loginDTO.getPasswordContrasenha());
+		HashMap<String, String> mapaClaves = new LinkedHashMap<String, String>();
+		mapaClaves.put("key", tokenSessionUsuario);
+		
+		BasicContext basicContext = loginModelo.generarLoginUsuario(generarAplicacion.getAuthenticacionContext(), mapaClaves);
+		
+		if(basicContext!=null){
+			loginModel = new LoginModel();
+			loginModel.setIdUsuario(basicContext.getIdUsuario());
+			loginModel.setUsernamePerfil(basicContext.getUsernamePerfil());
+			loginModel.setMailMember(basicContext.getMailPerfil());
+			loginModel.setUsernamePerfil(basicContext.getUsernamePerfil());
+			loginModel.setNombreMember(basicContext.getNombreMember());
+			loginModel.setApellidoPaternoMember(basicContext.getApellidoPaternoMember());
+			loginModel.setApellidoMaternoMember(basicContext.getApellidoMaternoMember());
+			loginModel.setAnonimo(basicContext.getAnonimo());
+			loginModel.setUltimaConexionPerfil(new Date());
+			
+			for(Identificacion i: basicContext.getListaIdentificacion()){
+				 if(i.getNombreIdentificador().equalsIgnoreCase("RUT")){
+					 loginModel.setRutMember(i.getValueIdentificador());
+					 break;
+				 }
+			}
+			
+			objLog.info(basicContext.getIdUsuario()+" - "+basicContext.getIdEmpresa()+" - "+basicContext.getIdEmpresaUsuario());
+			
+			token = basicContext.getKeyBasic();
+		}else{
+			loginModel = null;
+		}
 
+		return loginModel;
+	}
+	
+//	LoginModelo loginModelo = new LoginModelo();
+//	BasicContext basicContext = loginModelo.generarLoginUsuario(generarAplicacion.getAuthenticacionContext(), tokenSessionUsuario);
 	/** @Do inicializa los valores de los datos de trabajo del formulario
 	 * @param no param
 	 * @return void.
@@ -89,18 +167,23 @@ public class AdministracionSolicitudCertificadoImpl {
 	public void inicializarValoresDTO(){
 //		objLog.info("INI - iniciliazarValoresDTO");
 		
-		solicitudCertificado = new SolicitudCertificadoDTO();
-		
-		verSolicitudCertificado  = new SolicitudCertificadoDTO();
-		
-		listaSolicitudCertificado = new ArrayList<SolicitudCertificadoDTO>();
+		listaServicioModel = new ArrayList<ServicioModel>();
 		
 		listaProgramaUniversidad = new ArrayList<ProgramaUniversidadDTO>();
 		
+		listaProgramaUniversidadPostulacion = new ArrayList<ProgramaUniversidadPostulacionDTO>();
+		
 		listaTipoCertificado  = new ArrayList<TipoCertificadoDTO>();
 		
+		listaTipoSolicitud  = new ArrayList<TipoSolicitudDTO>();
+		
 		listaFinalidadCertificado = new ArrayList<FinalidadCertificadoDTO>();
-//		objLog.info("FIN - iniciliazarValoresDTO");
+		
+		listaRegion = new ArrayList<RegionDTO>();
+		
+		listaComuna = new ArrayList<ComunaDTO>();
+		
+//		listaSolicitudCertificado = new ArrayList<SolicitudCertificadoDTO>();
 	}
 
 	/** @Do genera los valores de disabled y llenado de combobox del formulario 
@@ -116,14 +199,20 @@ public class AdministracionSolicitudCertificadoImpl {
 		iniciliazarDisabled();
 		
 		llenarFechasCertificados();
+		
+		listarServicios();
+		
+		listarProgramasUniversidad(solicitudesModelo);
+		
+		listarProgramasUniversidadPostulacion(solicitudesModelo);
 
-		listarProgramasUniversidadDTO(solicitudesModelo);
+		listarTipoCertificado(solicitudesModelo);
+		
+		listarTipoSolicitud(solicitudesModelo);
 
-		listarTipoCertificadoDTO(solicitudesModelo);
+		listarFinalidadCertificado(solicitudesModelo);
 
-		listarFinalidadCertificadoDTO(solicitudesModelo);
-
-		listarUltimosSolicitudCertificadoDTO(solicitudesModelo);
+//		listarUltimosSolicitudCertificadoDTO(solicitudesModelo);
 		
 //		objLog.info("FIN - generarValoresFormulario");
 	}
@@ -138,7 +227,8 @@ public class AdministracionSolicitudCertificadoImpl {
 
 //		objLog.info("FIN - iniciliazarDisabled");
 	}
-
+	
+	
 	public void llenarFechasCertificados(){
 		Date MfechaHoy=new Date();
 
@@ -208,30 +298,63 @@ public class AdministracionSolicitudCertificadoImpl {
 
 	}
 
-	public void listarProgramasUniversidadDTO(SolicitudesUchileModelo solicitudesModelo){
+	
+	public void listarServicios(){
+
+		/**Traer Todos*/
+		SelectItem[] listaServicios = AccionesObjetosEstaticos.listarServicios();
+		
+		listaServicioModel = new ArrayList<ServicioModel>();
+		
+		for(int i=0; i<listaServicios.length ; i++){
+			ServicioModel servicioModel = new ServicioModel(i, listaServicios[0].getValue()+"");
+			listaServicioModel.add(servicioModel);
+		}
+	
+	}
+	
+	public void listarProgramasUniversidad(SolicitudesUchileModelo solicitudesModelo){
 
 		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
 		
 		/**Traer Todos*/
-		retListaProgramaUniversidadDTO = solicitudesModelo.listarProgramasUniversidadDTO(generarAplicacion.getAuthenticacionContext());
+		retListaProgramaUniversidadDTO = solicitudesModelo.listarProgramasUniversidad(generarAplicacion.getAuthenticacionContext());
 		
 		setListaProgramaUniversidad(retListaProgramaUniversidadDTO);
 	}
+	
+	public void listarProgramasUniversidadPostulacion(SolicitudesUchileModelo solicitudesModelo){
 
-	public void listarTipoCertificadoDTO(SolicitudesUchileModelo solicitudesModelo){
+		List<ProgramaUniversidadPostulacionDTO> retListaProgramasUniversidadPostulacionDTO = new ArrayList<ProgramaUniversidadPostulacionDTO>();
+		/**Traer Todos*/
+		retListaProgramasUniversidadPostulacionDTO = solicitudesModelo.listarProgramasUniversidadPostulacion(generarAplicacion.getAuthenticacionContext());
+		
+		setListaProgramaUniversidadPostulacion(retListaProgramasUniversidadPostulacionDTO);
+	}
+	
+	public void listarTipoCertificado(SolicitudesUchileModelo solicitudesModelo){
 		
 		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
 		
-		retListaTipoCertificadoDTO = solicitudesModelo.listarTipoCertificadoDTO(generarAplicacion.getAuthenticacionContext());
+		retListaTipoCertificadoDTO = solicitudesModelo.listarTipoCertificado(generarAplicacion.getAuthenticacionContext());
 		
 		setListaTipoCertificado(retListaTipoCertificadoDTO);
 	}
+	
+	public void listarTipoSolicitud(SolicitudesUchileModelo solicitudesModelo){
+		
+		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
+		
+		retListaTipoSolicitudDTO = solicitudesModelo.listarTipoSolicitud(generarAplicacion.getAuthenticacionContext());
+		
+		setListaTipoSolicitud(retListaTipoSolicitudDTO);
+	}
 
-	public void listarFinalidadCertificadoDTO(SolicitudesUchileModelo solicitudesModelo){
+	public void listarFinalidadCertificado(SolicitudesUchileModelo solicitudesModelo){
 		
 		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
 		
-		retListaFinalidadCertificadoDTO = solicitudesModelo.listarFinalidadCertificadoDTO(generarAplicacion.getAuthenticacionContext());
+		retListaFinalidadCertificadoDTO = solicitudesModelo.listarFinalidadCertificado(generarAplicacion.getAuthenticacionContext());
 		
 		setListaFinalidadCertificado(retListaFinalidadCertificadoDTO);
 	}
@@ -582,18 +705,12 @@ public class AdministracionSolicitudCertificadoImpl {
 	/********************* METODOS DE FUNCIONAMIENTO ******************************/
 	/******************GETTER y SETTER********************************************/
 
-	
-
-	public Date getFechaInicial() {
-		return fechaInicial;
+	public List<ServicioModel> getListaServicioModel() {
+		return listaServicioModel;
 	}
 
-	public List<SolicitudCertificadoDTO> getListaSolicitudCertificado() {
-		return listaSolicitudCertificado;
-	}
-
-	public void setListaSolicitudCertificado(List<SolicitudCertificadoDTO> listaSolicitudCertificado) {
-		this.listaSolicitudCertificado = listaSolicitudCertificado;
+	public void setListaServicioModel(List<ServicioModel> listaServicioModel) {
+		this.listaServicioModel = listaServicioModel;
 	}
 
 	public List<ProgramaUniversidadDTO> getListaProgramaUniversidad() {
@@ -602,6 +719,15 @@ public class AdministracionSolicitudCertificadoImpl {
 
 	public void setListaProgramaUniversidad(List<ProgramaUniversidadDTO> listaProgramaUniversidad) {
 		this.listaProgramaUniversidad = listaProgramaUniversidad;
+	}
+
+	public List<ProgramaUniversidadPostulacionDTO> getListaProgramaUniversidadPostulacion() {
+		return listaProgramaUniversidadPostulacion;
+	}
+
+	public void setListaProgramaUniversidadPostulacion(
+			List<ProgramaUniversidadPostulacionDTO> listaProgramaUniversidadPostulacion) {
+		this.listaProgramaUniversidadPostulacion = listaProgramaUniversidadPostulacion;
 	}
 
 	public List<TipoCertificadoDTO> getListaTipoCertificado() {
@@ -620,20 +746,88 @@ public class AdministracionSolicitudCertificadoImpl {
 		this.listaFinalidadCertificado = listaFinalidadCertificado;
 	}
 
-	public SolicitudCertificadoDTO getSolicitudCertificado() {
-		return solicitudCertificado;
+	public List<TipoSolicitudDTO> getListaTipoSolicitud() {
+		return listaTipoSolicitud;
 	}
 
-	public void setSolicitudCertificado(SolicitudCertificadoDTO solicitudCertificado) {
-		this.solicitudCertificado = solicitudCertificado;
+	public void setListaTipoSolicitud(List<TipoSolicitudDTO> listaTipoSolicitud) {
+		this.listaTipoSolicitud = listaTipoSolicitud;
 	}
 
-	public SolicitudCertificadoDTO getVerSolicitudCertificado() {
-		return verSolicitudCertificado;
+	public List<RegionDTO> getListaRegion() {
+		return listaRegion;
 	}
 
-	public void setVerSolicitudCertificado(SolicitudCertificadoDTO verSolicitudCertificado) {
-		this.verSolicitudCertificado = verSolicitudCertificado;
+	public void setListaRegion(List<RegionDTO> listaRegion) {
+		this.listaRegion = listaRegion;
+	}
+
+	public List<ComunaDTO> getListaComuna() {
+		return listaComuna;
+	}
+
+	public void setListaComuna(List<ComunaDTO> listaComuna) {
+		this.listaComuna = listaComuna;
+	}
+
+	public List<SolicitudCertificadoDTO> getListaSolicitudCertificado() {
+		return listaSolicitudCertificado;
+	}
+
+	public void setListaSolicitudCertificado(List<SolicitudCertificadoDTO> listaSolicitudCertificado) {
+		this.listaSolicitudCertificado = listaSolicitudCertificado;
+	}
+
+	public List<SolicitudAcademicaDTO> getListaSolicitudAcademica() {
+		return listaSolicitudAcademica;
+	}
+
+	public void setListaSolicitudAcademica(List<SolicitudAcademicaDTO> listaSolicitudAcademica) {
+		this.listaSolicitudAcademica = listaSolicitudAcademica;
+	}
+
+	public List<SolicitudPostulacionDTO> getListaSolicitudPostulacion() {
+		return listaSolicitudPostulacion;
+	}
+
+	public void setListaSolicitudPostulacion(List<SolicitudPostulacionDTO> listaSolicitudPostulacion) {
+		this.listaSolicitudPostulacion = listaSolicitudPostulacion;
+	}
+
+//	public SolicitudCertificadoDTO getVerSolicitudCertificado() {
+//		return verSolicitudCertificado;
+//	}
+//
+//	public void setVerSolicitudCertificado(SolicitudCertificadoDTO verSolicitudCertificado) {
+//		this.verSolicitudCertificado = verSolicitudCertificado;
+//	}
+//
+//	public SolicitudAcademicaDTO getVerSolicitudAcademica() {
+//		return verSolicitudAcademica;
+//	}
+//
+//	public void setVerSolicitudAcademica(SolicitudAcademicaDTO verSolicitudAcademica) {
+//		this.verSolicitudAcademica = verSolicitudAcademica;
+//	}
+//
+//	public SolicitudPostulacionDTO getVerSolicitudPostulacion() {
+//		return verSolicitudPostulacion;
+//	}
+//
+//	public void setVerSolicitudPostulacion(SolicitudPostulacionDTO verSolicitudPostulacion) {
+//		this.verSolicitudPostulacion = verSolicitudPostulacion;
+//	}
+
+	public ArchivoSolicitudDTO getArchivoSolicitud() {
+		return archivoSolicitud;
+	}
+
+	public void setArchivoSolicitud(ArchivoSolicitudDTO archivoSolicitud) {
+		this.archivoSolicitud = archivoSolicitud;
+	}
+
+	public Date getFechaInicial() {
+		return fechaInicial;
 	}
 
 	public void setFechaInicial(Date fechaInicial) {
@@ -704,6 +898,14 @@ public class AdministracionSolicitudCertificadoImpl {
 		this.generarAplicacion = generarAplicacion;
 	}
 
+	public LoginModel getLoginModel() {
+		return loginModel;
+	}
+
+	public void setLoginModel(LoginModel loginModel) {
+		this.loginModel = loginModel;
+	}
+
 	public String getToken() {
 		return token;
 	}
@@ -711,6 +913,13 @@ public class AdministracionSolicitudCertificadoImpl {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
+	public String getTokenSessionUsuario() {
+		return tokenSessionUsuario;
+	}
+
+	public void setTokenSessionUsuario(String tokenSessionUsuario) {
+		this.tokenSessionUsuario = tokenSessionUsuario;
+	}
 	
 }

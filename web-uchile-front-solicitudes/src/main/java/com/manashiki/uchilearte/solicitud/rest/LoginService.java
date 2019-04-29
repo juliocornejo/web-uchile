@@ -6,6 +6,7 @@ import java.time.Instant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -17,13 +18,15 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
-//import com.google.gson.Gson;
-import vijnana.respuesta.front.response.WrapperFrontResponse;
+import com.manashiki.uchilearte.solicitud.response.WrapperFrontResponse;
+
 import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.utilidades.component.utilidades.AppDate;
 import vijnana.utilidades.component.utilidades.JsonMappeo;
+import web.uchile.articular.session.direccionamiento.Navigation;
 import web.uchile.articular.session.impl.LoginImpl;
 import web.uchile.articular.session.model.LoginModel;
+import web.uchile.articular.session.model.ResponseWebUchile;
 
 
 @Path("/LoginService")
@@ -50,18 +53,12 @@ public class LoginService {
 		
 		WrapperFrontResponse wrapper = new WrapperFrontResponse();
 		
-		logger.info("Login de Usuario");
+		logger.info("Login de Usuario "+jsonFicha);
 		
-		logger.info(jsonFicha);
-		
-		String data = null;
-		
-		String redireccion = null;
+		ResponseWebUchile data = null;
 		
 		String jsonResultado = "";
 		
-		boolean ok = false;
-
 		try {
 			
 			LoginModel loginModel = new LoginModel();
@@ -73,19 +70,21 @@ public class LoginService {
 			
 			loginModel = objectMapper.readValue(jsonParametrosBusquedaRequest, LoginModel.class);
 			
-			if(loginImpl.getGenerarAplicacion().getAuthenticacionContext()!=null && loginModel.getUsernamePerfil()!=null && !loginModel.getUsernamePerfil().equals("") && 
-					loginModel.getPasswordContrasenha()!=null && !loginModel.getPasswordContrasenha().equals("")){
+			if(loginImpl.getGenerarAplicacion().getAuthenticacionContext()!=null && loginModel.getUsernamePerfil()!=null && !"".equals(loginModel.getUsernamePerfil()) && 
+					loginModel.getPasswordContrasenha()!=null && !"".equals(loginModel.getPasswordContrasenha())){
 					/*hay que validar antes de enivar la información*/
 					try{
 						
-						loginModel = loginImpl.obtenerUsuarioLogin(loginModel.getUsernamePerfil(), loginModel.getPasswordContrasenha());
+						data = loginImpl.obtenerUsuarioLoginAdministrador(loginModel.getUsernamePerfil(), loginModel.getPasswordContrasenha());
 						
-						if(loginModel!=null){
-							data = loginImpl.getToken();
-							redireccion = "web-uchile-front-solicitudes/main/view/administracion-solicitudes/administracion.jsp";
-							ok = true;
-						}else{
-							ok = false;
+						if(data!=null){
+							
+							HttpSession misession= request.getSession(true);
+							
+							misession.setAttribute("keyAplicacionUchile", jsonFicha);
+							
+							misession.setAttribute("keySessionUsuario",loginImpl.getToken());
+							
 						}
 					}catch(Exception e){
 						error = new AbstractWrapperError();
@@ -94,18 +93,8 @@ public class LoginService {
 
 						error.setCodigo(1);
 					}
-				}else{
-					ok = false;
 				}
 		} catch (Exception e) {
-//			logger.error("Exception en el seteo de los datos para la solicitud de certificado: "+e.getMessage(), e);
-//			AbstractWrapperError error = new AbstractWrapperError();
-//			error.setCodigo(400);
-//			error.setMensaje("Exception en el seteo de los datos para la solicitud de certificado");
-//			wrapper.setError(error);
-//			wrapper.setUrl("web-uchile-front-solicitudes/main/view/login.jsp");
-//			jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
-//			return jsonResultado;
 			error = new AbstractWrapperError();
 
 			error.setMensaje("Exception en la obtencion de los datos del servicio"+ e.getMessage());
@@ -114,12 +103,12 @@ public class LoginService {
 		}
 		
 		if(error==null){
-			wrapper = new WrapperFrontResponse(new vijnana.respuesta.wrapper.response.AbstractWrapperError(), ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(),
-					this.request.getMethod(), redireccion, data);
+			wrapper = new WrapperFrontResponse(null, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())),  this.request.getRequestURL().toString(),
+					this.request.getMethod(), data);
 		}
 		else{
-			wrapper = new WrapperFrontResponse(error, ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(), 
-					this.request.getMethod(), redireccion, data);
+			wrapper = new WrapperFrontResponse(error, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())),  this.request.getRequestURL().toString(), 
+					this.request.getMethod(), data);
 		}
 		
 		jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
@@ -128,96 +117,50 @@ public class LoginService {
 	}
 	
 	
-//	@POST
-//    @Path("/loginUsuario")
-//    @Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//    public String loginUsuario(
-//    									@FormParam("requestJson") String jsonParametrosBusquedaRequest,
-//    									@FormParam("requestFicha") String jsonFicha,
-//    									@Context HttpServletResponse servletResponse) throws IOException {
-//		Instant start = Instant.now();
-//		
-//		AbstractWrapperError error = null;
-//		
-//		WrapperFrontResponse wrapper = new WrapperFrontResponse();
-//		
-//		logger.info("Login de Usuario");
-//		
-//		logger.info(jsonFicha);
-//		
-//		String data = null;
-//		
-//		String redireccion = null;
-//		
-//		String jsonResultado = "";
-//		
-//		boolean ok = false;
-//
-//		try {
-//			
-//			LoginModel loginModel = new LoginModel();
-//			LoginImpl loginImpl = new LoginImpl(request.getRemoteAddr(), request.getRemoteHost(), jsonFicha);
-//			
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			
-//			loginImpl.inicializarFormulario();
-//			
-//			loginModel = objectMapper.readValue(jsonParametrosBusquedaRequest, LoginModel.class);
-//			
-//			if(loginImpl.getGenerarAplicacion().getAuthenticacionContext()!=null && loginModel.getUsernamePerfil()!=null && !loginModel.getUsernamePerfil().equals("") && 
-//					loginModel.getPasswordContrasenha()!=null && !loginModel.getPasswordContrasenha().equals("")){
-//					/*hay que validar antes de enivar la información*/
-//					try{
-//						
-//						loginModel = loginImpl.obtenerUsuarioLogin(loginModel.getUsernamePerfil(), loginModel.getPasswordContrasenha());
-//						
-//						if(loginModel!=null){
-//							data = loginImpl.getToken();
-//							redireccion = "web-uchile-front-solicitudes/main/view/administracion-solicitudes/administracion.jsp";
-//							ok = true;
-//						}else{
-//							ok = false;
-//						}
-//					}catch(Exception e){
-//						error = new AbstractWrapperError();
-//
-//						error.setMensaje("Exception en la obtencion de los datos del negocio"+ e.getMessage());
-//
-//						error.setCodigo(1);
-//					}
-//				}else{
-//					ok = false;
-//				}
-//		} catch (Exception e) {
-////			logger.error("Exception en el seteo de los datos para la solicitud de certificado: "+e.getMessage(), e);
-////			AbstractWrapperError error = new AbstractWrapperError();
-////			error.setCodigo(400);
-////			error.setMensaje("Exception en el seteo de los datos para la solicitud de certificado");
-////			wrapper.setError(error);
-////			wrapper.setUrl("web-uchile-front-solicitudes/main/view/login.jsp");
-////			jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
-////			return jsonResultado;
-//			error = new AbstractWrapperError();
-//
-//			error.setMensaje("Exception en la obtencion de los datos del servicio"+ e.getMessage());
-//
-//			error.setCodigo(1);
-//		}
-//		
-//		if(error==null){
-//			wrapper = new WrapperFrontResponse(new vijnana.respuesta.wrapper.response.AbstractWrapperError(), ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(),
-//					this.request.getMethod(), redireccion, data);
-//		}
-//		else{
-//			wrapper = new WrapperFrontResponse(error, ok, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), 0, this.request.getRequestURL().toString(), 
-//					this.request.getMethod(), redireccion, data);
-//		}
-//		
-//		jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
-//		
-//        return jsonResultado;
-//	}
+	@POST
+    @Path("/redireccionAdministracion")
+    @Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+    public String obtenerUsuarioLogin(
+    									@FormParam("requestFicha") String jsonFicha,
+    									@Context HttpServletResponse servletResponse) throws IOException {
+		Instant start = Instant.now();
+		
+		AbstractWrapperError error = null;
+		
+		WrapperFrontResponse wrapper = new WrapperFrontResponse();
+		
+		logger.info("Login de Usuario"+jsonFicha);
+	
+		ResponseWebUchile data = null;
+		
+		String jsonResultado = "";
+		
+		try {
+				Navigation navigation = new Navigation();
+//				navigation.redirectExterno(linkExterno);
+			
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje("Exception en la obtencion de los datos del servicio"+ e.getMessage());
+
+			error.setCodigo(1);
+		}
+		
+		if(error==null){
+			wrapper = new WrapperFrontResponse(new vijnana.respuesta.wrapper.response.AbstractWrapperError(),  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())),  this.request.getRequestURL().toString(),
+					this.request.getMethod(), data);
+		}
+		else{
+			wrapper = new WrapperFrontResponse(error, AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())),  this.request.getRequestURL().toString(), 
+					this.request.getMethod(), data);
+		}
+		
+		jsonResultado = JsonMappeo.convertirObjectToJson(wrapper);
+		
+        return jsonResultado;
+	}
 	
 	
 	

@@ -1,12 +1,8 @@
-var solicitudCertificadoApp = angular.module('login',[]);
+var uchileApp = angular.module('uchileApp.administracion')
 
-
-
-solicitudCertificadoApp.controller('LoginController', [ '$scope', '$http', '$window', '$sce',
-                                                        function($scope, $http, $window, $sce) {
+.controller('AdministracionController', [ '$scope', '$http', '$window', '$sce', 'notify',   function($scope, $http, $window, $sce, notify) {
 
 	/*variables globales*/
-	
 
 	$scope.val = null;
 	
@@ -29,17 +25,16 @@ solicitudCertificadoApp.controller('LoginController', [ '$scope', '$http', '$win
 	$scope.botonRegistrar;
 
 	/*pestañas*/
-	$scope.pestanaLogin;
+	$scope.pestanaAdministracion;
 	$scope.pestanaConfirmacion;
 	$scope.tabAntecedentes;
 	$scope.tabConfirmacion;
 	$scope.liLogin;
 	$scope.modalCargando;
 	
-	$scope.parsearLoginJson = function() {
-				
+	$scope.parsearAdministracionJson = function() {
 		console.log('=============================================== Inicializando Data Certificados ===========================================');
-		$scope.ficha = $window.ficha;
+	//	$scope.ficha = $window.ficha;
 		$scope.login = $window.login;
 
 		$scope.error = $window.jsonMensajeError;
@@ -66,14 +61,14 @@ solicitudCertificadoApp.controller('LoginController', [ '$scope', '$http', '$win
 		$scope.botonIniciar = $('button[id=iniciar]');
 		$scope.botonRegistrar = $('button[id=registrar]');
 		
-		$scope.pestanaLogin = $('a[id=pestanaLogin]');
+		$scope.pestanaAdministracion = $('a[id=pestanaAdministracion]');
 		$scope.pestanaConfirmacion = $('a[id=pestanaConfirmacion]');
 		$scope.tabAntecedentes = $('div[id=antecedentes]');
 		$scope.tabConfirmacion = $('div[id=confirmacion]');
 		
-		$scope.pestanaLogin.attr('disabled','disabled');
+		$scope.pestanaAdministracion.attr('disabled','disabled');
 		
-		$scope.liLogin = $('li[id=pestana1');
+		$scope.liAdministracion = $('li[id=pestana1');
 		$scope.mensaje = $('div[id=msg');
 		
 		$scope.modalCargando = $('div[id=cargandoModal');
@@ -154,51 +149,94 @@ solicitudCertificadoApp.controller('LoginController', [ '$scope', '$http', '$win
 		console.log('=================================================================================================================');
 	};
 	
-    $scope.obtenerUsuarioLogin = function(){
-    	
-    	var seguir = $scope.validarData();
+//	$scope.obtenerUsuarioAdministracion = function(){
+//	
+//			var seguir = $scope.validarData();
+//			if(!seguir) 
+//				return; 
+//	
+//			$scope.modalCargando.modal("show");
+//			
+//			notify($scope.usuario.val(), $scope.contrasenha.val(), $scope.ficha ).success(function(response) {
+//				var a = response;
+//			}).error(function(data, status, headers, config) {
+//    	        //$log.error(status);
+//    	        //$log.error(data);                		
+//        	});
+//
+//		};
+	$scope.obtenerUsuarioLogin = function(){
+
+		var seguir = $scope.validarData();
 		if(!seguir) 
 			return; 
-    	
-    	$scope.modalCargando.modal("show");
-    	$scope.jsonRequest =  new Object();
-    	
-    	$scope.jsonRequest.usernamePerfil =  $scope.usuario.val();
-    	$scope.jsonRequest.passwordContrasenha =  $scope.contrasenha.val();
-    	    	
-    	var data = $.param({
-    		requestJson: JSON.stringify($scope.jsonRequest),
-    		requestFicha: JSON.stringify($scope.ficha)
-        });
-    
-        var config = {
-            headers : {
-            	'Content-Type': 'application/json;',
-                'Accept-Encoding' : 'gzip',
-            }
-        };
 
-        $http.post('/web-uchile-front-solicitudes/rest/LoginService/loginUsuario', data, config)
-        
-        
-        .then(function (response) {
-        	if(response.data !== undefined && response.data.ok == true){
-        			//var url = $window.origin +'/'+ response.data.redireccion;
-        			//$window.location.href = url;
-        			$scope.modalCargando.modal("hide");
-        			
-        			setTimeout(function(){
-        				 $http.post('/web-uchile-front-solicitudes/rest/LoginService/redireccionAdministracion', data, config)
-        				
-        			}, 1000);
-        		}else{
-        			$scope.modalCargando.modal("hide");
-        			$scope.mensaje.html("<span><strong>*</strong> Usuario Inválido.</span>");
-            		$scope.mensaje.attr('style','display: block;')
-        		}
-            }
-        );
-    };
+		$scope.modalCargando.modal("show");
+		$scope.jsonRequest =  new Object();
+
+		$scope.jsonRequest.usernamePerfil =  $scope.usuario.val();
+		$scope.jsonRequest.passwordContrasenha =  $scope.contrasenha.val();
+
+		var data = $.param({
+			requestJson: JSON.stringify($scope.jsonRequest),
+			requestFicha: JSON.stringify($scope.ficha)
+		});
+
+		var config = {
+				headers : {
+					'Content-Type': 'application/json;',
+					'Accept-Encoding' : 'gzip',
+				}
+		};
+
+		$http.post('/web-uchile-front-solicitudes/rest/AdministracionService/loginUsuario', data, config).then(function (response) {
+			if(response==null){
+				$scope.modalCargando.modal("hide");
+				$scope.mensaje.html("<span><strong>*</strong> Error.</span>");
+				$scope.mensaje.attr('style','display: block;');
+			}
+			else if(response.data !== undefined && response.data.error !== undefined && response.data.error !== null){
+				$scope.modalCargando.modal("hide");
+				$scope.mensaje.html("<span><strong>*</strong> Usuario Sin validar.</span>");
+				$scope.mensaje.attr('style','display: block;');
+			}else if(response.data !== undefined && response.data.ok !== undefined && response.data.ok == true && response.data.data == "ok"){
+				//var url = $window.origin +'/'+ response.data.redireccion;
+				//$window.location.href = url;
+				$scope.modalCargando.modal("hide");
+
+				setTimeout(function(){
+
+					
+					var config = {
+							headers : {
+								'Content-Type': 'application/json;',
+								'Accept-Encoding' : 'gzip',
+							}
+					};
+					$scope.redireccionar(response.data.redireccion);
+
+				}, 1000);
+			}else{
+				$scope.modalCargando.modal("hide");
+				$scope.mensaje.html("<span><strong>*</strong> Usuario Inválido.</span>");
+				$scope.mensaje.attr('style','display: block;')
+			}
+		}
+		);
+	};
+	
+	$scope.redireccionar  = function(url){
+		var form = $(document.createElement('form'));
+        $(form).attr("action", url);
+        $(form).attr("method", "POST");
+        $(form).css("display", "none");
+
+//        var key = $("<input>") .attr("type", "text") .attr("name", "key") .val(ficha);
+//        $(form).append($(key));
+
+        form.appendTo( document.body );
+        $(form).submit();
+	};
 
     
 	$scope.caracteresTexto = function (texto){
@@ -246,8 +284,38 @@ solicitudCertificadoApp.controller('LoginController', [ '$scope', '$http', '$win
 		console.log('======================================================================================================================');
 		return;
 	}	
-	
-	
-	
-	
-}]);
+}]).
+
+factory('notify', ['$window', '$http', function(win, $http) {
+   var msgs = [];
+   return function(usuario, contrasenha, ficha) {
+	   
+	  		
+		var jsonRequest =  new Object();
+
+		jsonRequest.usernamePerfil =  usuario;
+		jsonRequest.passwordContrasenha =  contrasenha;
+
+		var data = $.param({
+			requestJson: JSON.stringify(jsonRequest),
+			requestFicha: JSON.stringify(ficha)
+		});
+
+		var config = {
+				headers : {
+					'Content-Type': 'application/json;',
+					'Accept-Encoding' : 'gzip',
+				}
+		};
+		
+		
+		return $http.post('/web-uchile-front-solicitudes/rest/AdministracionService/loginUsuario', data, config)
+		.then(function (response){}
+			
+		);
+	   
+   };
+ }]);
+
+
+

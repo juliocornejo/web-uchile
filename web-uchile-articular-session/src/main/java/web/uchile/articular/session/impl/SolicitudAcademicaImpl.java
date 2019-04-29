@@ -24,6 +24,7 @@ import vijnana.utilidades.component.utilidades.TipoFormatoFecha;
 import vijnana.utilidades.component.utilidades.ValidacionPatrones;
 import web.uchile.articular.servicio.impl.SolicitudesUchileModelo;
 import web.uchile.articular.servicio.properties.WebUchileProperties;
+import web.uchile.articular.session.model.ResponseWebUchile;
 
 
 public class SolicitudAcademicaImpl {
@@ -170,7 +171,7 @@ public class SolicitudAcademicaImpl {
 
 		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
 
-		retListaProgramaUniversidadDTO  = solicitudesModelo.listarProgramasUniversidadOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaProgramaUniversidadDTO  = solicitudesModelo.listarProgramasUniversidadOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
 	}
@@ -179,7 +180,7 @@ public class SolicitudAcademicaImpl {
 
 		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
 
-		retListaTipoSolicitudDTO  = solicitudesModelo.listarTipoSolicitudOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaTipoSolicitudDTO  = solicitudesModelo.listarTipoSolicitudOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
 	}
@@ -302,16 +303,16 @@ public class SolicitudAcademicaImpl {
 	public boolean validarLlenadoFormulario(SolicitudAcademicaDTO solicitudAcademicaDTO){
 		boolean validar = false;
 
-		if(solicitudAcademicaDTO.getNombrePersonaSolicitudAcademica()!=null && !solicitudAcademicaDTO.getNombrePersonaSolicitudAcademica().equals("")){
-			if(solicitudAcademicaDTO.getApellidoPaternoPersonaSolicitudAcademica()!=null && !solicitudAcademicaDTO.getApellidoPaternoPersonaSolicitudAcademica().equals("")){
-				if(solicitudAcademicaDTO.getApellidoMaternoPersonaSolicitudAcademica()!=null && !solicitudAcademicaDTO.getApellidoMaternoPersonaSolicitudAcademica().equals("")){
-					if(solicitudAcademicaDTO.getRutPersonaSolicitudAcademica()!=null && !solicitudAcademicaDTO.getRutPersonaSolicitudAcademica().equals("")){
+		if(solicitudAcademicaDTO.getNombrePersonaSolicitudAcademica()!=null && !"".equals(solicitudAcademicaDTO.getNombrePersonaSolicitudAcademica())){
+			if(solicitudAcademicaDTO.getApellidoPaternoPersonaSolicitudAcademica()!=null && !"".equals(solicitudAcademicaDTO.getApellidoPaternoPersonaSolicitudAcademica())){
+				if(solicitudAcademicaDTO.getApellidoMaternoPersonaSolicitudAcademica()!=null && !"".equals(solicitudAcademicaDTO.getApellidoMaternoPersonaSolicitudAcademica())){
+					if(solicitudAcademicaDTO.getRutPersonaSolicitudAcademica()!=null && !"".equals(solicitudAcademicaDTO.getRutPersonaSolicitudAcademica())){
 						if(solicitudAcademicaDTO.getIdProgramaUniversidad()!= 0 ){
-								if(solicitudAcademicaDTO.getMailMember()!=null && !solicitudAcademicaDTO.getMailMember().equals("")){
+								if(solicitudAcademicaDTO.getMailMember()!=null && !"".equals(solicitudAcademicaDTO.getMailMember())){
 									if(ValidacionPatrones.validarPatronEmail(solicitudAcademicaDTO.getMailMember())){	
-										if(solicitudAcademicaDTO.getAnhoIngreso()!=null && !solicitudAcademicaDTO.getAnhoIngreso().equals("")){
+										if(solicitudAcademicaDTO.getAnhoIngreso()!=null && !"".equals(solicitudAcademicaDTO.getAnhoIngreso())){
 											if(solicitudAcademicaDTO.getIdTipoSolicitud()!=0){
-												if(solicitudAcademicaDTO.getFundamentacionSolicitud()!=null && !solicitudAcademicaDTO.getFundamentacionSolicitud().equals("")){
+												if(solicitudAcademicaDTO.getFundamentacionSolicitud()!=null && !"".equals(solicitudAcademicaDTO.getFundamentacionSolicitud())){
 													validar = true;
 												}else{
 													objLog.error("No se fundamento la solicitud académica");
@@ -357,28 +358,28 @@ public class SolicitudAcademicaImpl {
 	 * @return void.
 	 * no lanza Excepciones.
 	 */
-	public boolean almacenarSolicitudAcademicaPagoOffline() {
+	public ResponseWebUchile almacenarSolicitudAcademicaPagoOffline() {
 		//Almacenar y redirigir a exito.xhtml
 		String paginaRedireccion = "/exito.xhtml";
 		
 		if(generarAplicacion.getAuthenticacionContext()!=null){
 			if(almacenarSolicitudAcademica(paginaRedireccion, false)){
-				return true;
+				return new ResponseWebUchile("web-uchile-front-solicitudes/main/view/solicitud-academica-exito.jsp", true);
 			}
 		}
 		
-		return false;
+		return new ResponseWebUchile(false);
 	}
 
-	public boolean almacenarSolicitudAcademicaPagoOnline() throws IOException {
+	public ResponseWebUchile almacenarSolicitudAcademicaPagoOnline() throws IOException {
 		//Almacenar y redirigir a pago.xhtml
 		String paginaRedireccion = "/pago.xhtml";
 		if(generarAplicacion.getAuthenticacionContext()!=null){
 			if(almacenarSolicitudAcademica(paginaRedireccion, true)){
-				return true;
+				return new ResponseWebUchile("web-uchile-front-solicitudes/main/view/solicitud-certificado-exito.jsp", true);
 			}
 		}
-		return false;
+		return new ResponseWebUchile(false);
 	}
 
 

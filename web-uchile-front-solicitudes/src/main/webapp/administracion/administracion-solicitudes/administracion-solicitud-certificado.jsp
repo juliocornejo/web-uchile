@@ -59,7 +59,6 @@
 		var jsonListaSolicitudCertificado = ${listaSolicitudCertificado};
 		var ficha = ${ficha};
 		$( document ).ready(function() {
-			console.log('Inicio del Formulario de Certificados');
 	     });	
 
 		</script>
@@ -68,7 +67,7 @@
 <body ng-controller="AdministracionSolicitudCertificadoController" ng-init="parsearAdministracionSolicitudCertificadoJson(); data = {};" class="body">
 
 	<div class="banner">
-		<img src='/web-uchile-front-solicitudes/administracion-solicitudes/banner_1.jpg' border='0' alt="banner 1" class="bannerTop"/>
+		<img src='/web-uchile-front-solicitudes/assets/images/banner_1.jpg' border='0' alt="banner 1" class="bannerTop"/>
 	</div>
 	
 	<div class="main-container footer">
@@ -158,7 +157,7 @@
 	    <div class="modal-content modelCargando">
 	      <div class="modal-header">
 	        <h4 class="modal-title">Enviando la Solicitud del Certificado   
-	        	<img ng-src='/web-uchile-front-solicitudes/administracion-solicitudes/3d-loader.gif' height="35" width="35" />
+	        	<img ng-src='/web-uchile-front-solicitudes/assets/images/3d-loader.gif' height="35" width="35" />
 	        </h4>
 	      </div>
 	    </div>

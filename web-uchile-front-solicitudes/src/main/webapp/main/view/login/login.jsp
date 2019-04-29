@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<html ng-app="login" lang="en">
+<html ng-app="uchileApp" lang="en">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,10 +31,6 @@
 		<link rel="stylesheet" type="text/css" href="/web-uchile-front-solicitudes/assets/css/bootstrap/bootstrap.min.css">
 		<script type="text/javascript" src="/web-uchile-front-solicitudes/lib/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/web-uchile-front-solicitudes/lib/ui-bootstrap-tpls-1.1.2.min.js"></script>
-
-		<!-- jQuery Global Controller-->		
-		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/controllers/login/loginController.js?version=1.0.1"></script>
-		
 		
 		<!-- JS generales de Desarrollo-->
 		<script src="/web-uchile-front-solicitudes/assets/js/swiper.min.js"></script>
@@ -53,15 +49,18 @@
 		<script src="/web-uchile-front-solicitudes/assets/js/ux/listing/main.js"></script>
 		<script src="/web-uchile-front-solicitudes/assets/js/validar_es.js"></script>
 		
+		<!-- Angular Modulos  -->	
+		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/login/app.js?version=1.0.1"></script>
+		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/login/index.js?version=1.0.1"></script>
+		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/login/controller/loginController.js?version=1.0.1"></script>
+		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/login/factory/loginFactory.js?version=1.0.1"></script>
+		<script type="text/javascript" src="/web-uchile-front-solicitudes/main/login/service/loginService.js?version=1.0.1"></script>
+		
 		<script type="text/javascript">
-		//var jsonMensajeError = ${Error};
-		//var jsonListaPrograma = ${listaPrograma};
-		//var jsonListaTipoCertificado = ${listaTipoCertificado};
-		//var jsonListaFinalidadCertificado = ${listaFinalidadCertificado};
+
 		var login = ${login};
 		var ficha = ${ficha};
 		$( document ).ready(function() {
-			console.log('Inicio del Formulario de Certificados');
 	     });	
 
 		</script>
@@ -70,7 +69,7 @@
 <body ng-controller="LoginController" ng-init="parsearLoginJson(); data = {};" class="body">
 
 	<div class="banner">
-		<img src='/web-uchile-front-solicitudes/administracion-solicitudes/banner_1.jpg' border='0' alt="banner 1" class="bannerTop"/>
+		<img src='/web-uchile-front-solicitudes/assets/images/banner_1.jpg' border='0' alt="banner 1" class="bannerTop"/>
 	</div>
 	
 	<div class="main-container footer">
@@ -161,7 +160,7 @@
 	    <div class="modal-content modelCargando">
 	      <div class="modal-header">
 	        <h4 class="modal-title">Enviando la Solicitud del Certificado   
-	        	<img ng-src='/web-uchile-front-solicitudes/administracion-solicitudes/3d-loader.gif' height="35" width="35" />
+	        	<img ng-src='/web-uchile-front-solicitudes/assets/images/3d-loader.gif' height="35" width="35" />
 	        </h4>
 	      </div>
 	    </div>

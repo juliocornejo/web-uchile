@@ -3,7 +3,17 @@ package web.uchile.articular.session.utilidades;
 import javax.faces.model.SelectItem;
 
 public class AccionesObjetosEstaticos {
+	
+	public static SelectItem[] listarServicios(){
+		SelectItem[] listaServicios = new SelectItem[13];
+		listaServicios[0] = new SelectItem("0", "Seleccione Servicio");
+		listaServicios[1] = new SelectItem("1", "Solicitud Certificado");
+		listaServicios[2] = new SelectItem("2", "Solicitud Academica");
+		listaServicios[3] = new SelectItem("3", "Solicitud Postulacion");
 
+		return listaServicios;
+	}
+	
 	public static SelectItem[] listarDiasNacimiento(){
 		SelectItem[] listaDiasNacimiento = new SelectItem[32];
 		int ivariableMostar;

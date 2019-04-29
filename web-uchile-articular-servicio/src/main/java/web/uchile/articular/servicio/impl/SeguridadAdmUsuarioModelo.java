@@ -2,7 +2,6 @@ package web.uchile.articular.servicio.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,20 +14,12 @@ import com.manashiki.seguridad.servdto.dto.entities.formulario.TipoAccionUsuario
 import com.manashiki.seguridad.servdto.dto.entities.formulario.UsuarioSeguridad;
 import com.manashiki.seguridad.servdto.dto.entities.transferencia.ResponseSeguridad;
 
-import vijnana.respuesta.wrapper.request.ConsultaSeguridad;
 import vijnana.respuesta.wrapper.request.ConsultaWebmail;
 import vijnana.respuesta.wrapper.response.seguridad.AutentificacionContext;
-import vijnana.respuesta.wrapper.response.seguridad.AutentificacionResponse;
-import vijnana.respuesta.wrapper.response.seguridad.BasicContext;
-import vijnana.respuesta.wrapper.response.seguridad.sessionplataforma.SessionPlataforma;
 import vijnana.seguridad.orquestador.cliente.ClienteRest;
-import vijnana.seguridad.orquestador.cliente.ClienteSeguridad;
 import vijnana.seguridad.orquestador.properties.VijnanaSeguridadProperties;
 import vijnana.seguridad.orquestador.properties.adm.VijnanaSeguridadAdmUsuarioProperties;
-import vijnana.utilidades.component.utilidades.AppDate;
 import vijnana.utilidades.component.utilidades.Ip;
-import vijnana.utilidades.component.utilidades.JsonMappeo;
-import vijnana.utilidades.component.utilidades.TipoFormatoFecha;
 
 //para las aplicaciones que en su front van a modificar
 public class SeguridadAdmUsuarioModelo {
@@ -303,47 +294,44 @@ public class SeguridadAdmUsuarioModelo {
 		return null;
 	}
 
-
-	public List<UsuarioSeguridad> listarUsuarioSeguridadxEmpresaxRolxFechaCreacion(Date fechaInicial, Date fechaFinal,  String rolUsuario, String tokenAuthenticacionContextSeguridad){
-
-		List<UsuarioSeguridad> listaUsuarioSeguridad = new ArrayList<UsuarioSeguridad>();
-
-		UsuarioSeguridad usuarioSeguridadInicial = new UsuarioSeguridad();
-
-		UsuarioSeguridad usuarioSeguridadFinal = new UsuarioSeguridad();
-
-		usuarioSeguridadInicial.setCreacionMember(AppDate.obtenerFechaEnFormato(fechaInicial, TipoFormatoFecha.YYYY_MM_ddTHH_MM_SSZ));
-
-		usuarioSeguridadFinal.setCreacionMember(AppDate.obtenerFechaEnFormato(fechaFinal, TipoFormatoFecha.YYYY_MM_ddTHH_MM_SSZ));
-
-		listaUsuarioSeguridad.add(usuarioSeguridadInicial);
-
-		listaUsuarioSeguridad.add(usuarioSeguridadFinal);
-
-		ResponseSeguridad responseSeguridad = new ResponseSeguridad(listaUsuarioSeguridad);
-		String dataRequest = JsonMappeo.convertirObjectToJson(responseSeguridad);
-
-		ConsultaSeguridad consultaSeguridad = new ConsultaSeguridad();
-		consultaSeguridad.setDataRequest(dataRequest);
-		consultaSeguridad.setKeySeguridad(tokenAuthenticacionContextSeguridad);
-//		consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.getRolusuario());
-		consultaSeguridad.setRolContexto(rolUsuario);
-		
-		responseSeguridad = clienteRest.post(consultaSeguridad, vijnanaSeguridadProperties.getVijnanaServidor(),  vijnanaSeguridadAdmUsuarioProperties.getLocalListarUsuarioSeguridadxEmpresaxRolxFechaCreacion());
-
-		if(responseSeguridad!=null && responseSeguridad.getListaUsuarioSeguridad()!=null){
-			listaUsuarioSeguridad = responseSeguridad.getListaUsuarioSeguridad();
-		}else{
-			listaUsuarioSeguridad = new ArrayList<UsuarioSeguridad>();
-		}
-
-		return listaUsuarioSeguridad;
-	}
-
+	/**	
+//		public List<UsuarioSeguridad> listarUsuarioSeguridadxEmpresaxRolxFechaCreacion(Date fechaInicial, Date fechaFinal,  String rolUsuario, String tokenAuthenticacionContextSeguridad){
+//
+//		List<UsuarioSeguridad> listaUsuarioSeguridad = new ArrayList<UsuarioSeguridad>();
+//
+//		UsuarioSeguridad usuarioSeguridadInicial = new UsuarioSeguridad();
+//
+//		UsuarioSeguridad usuarioSeguridadFinal = new UsuarioSeguridad();
+//
+//		usuarioSeguridadInicial.setCreacionMember(AppDate.obtenerFechaEnFormato(fechaInicial, TipoFormatoFecha.YYYY_MM_ddTHH_MM_SSZ));
+//
+//		usuarioSeguridadFinal.setCreacionMember(AppDate.obtenerFechaEnFormato(fechaFinal, TipoFormatoFecha.YYYY_MM_ddTHH_MM_SSZ));
+//
+//		listaUsuarioSeguridad.add(usuarioSeguridadInicial);
+//
+//		listaUsuarioSeguridad.add(usuarioSeguridadFinal);
+//
+//		ResponseSeguridad responseSeguridad = new ResponseSeguridad(listaUsuarioSeguridad);
+//		String dataRequest = JsonMappeo.convertirObjectToJson(responseSeguridad);
+//
+//		ConsultaSeguridad consultaSeguridad = new ConsultaSeguridad();
+//		consultaSeguridad.setDataRequest(dataRequest);
+//		consultaSeguridad.setKeySeguridad(tokenAuthenticacionContextSeguridad);
+//		consultaSeguridad.setRolContexto(rolUsuario);
+//		
+//		responseSeguridad = clienteRest.post(consultaSeguridad, vijnanaSeguridadProperties.getVijnanaServidor(),  vijnanaSeguridadAdmUsuarioProperties.getLocalListarUsuarioSeguridadxEmpresaxRolxFechaCreacion());
+//
+//		if(responseSeguridad!=null && responseSeguridad.getListaUsuarioSeguridad()!=null){
+//			listaUsuarioSeguridad = responseSeguridad.getListaUsuarioSeguridad();
+//		}else{
+//			listaUsuarioSeguridad = new ArrayList<UsuarioSeguridad>();
+//		}
+//
+//		return listaUsuarioSeguridad;
+//	}
+***/
 
 	public boolean postEmail(Map<String, AutentificacionContext> dataPlataformaAutentificacion){
-
-		UsuarioSeguridad usuarioSeguridad = new UsuarioSeguridad();
 
 //		usuarioSeguridad.setKeyAutentificacion(dataPlataformaAutentificacion.get(UchileOrquestadorConstantes.getAplicacion()).getKeyAutentificacion());
 //		usuarioSeguridad.setIdEmpresa(dataPlataformaAutentificacion.get(UchileOrquestadorConstantes.getAplicacion()).getEnterpriseContext().getBasicContext().getIdEmpresa());
@@ -366,8 +354,6 @@ public class SeguridadAdmUsuarioModelo {
 	}
 
 	public boolean postEmailRecuperacionCorreo(Map<String, AutentificacionContext> dataPlataformaAutentificacion){
-
-		UsuarioSeguridad usuarioSeguridad = new UsuarioSeguridad();
 
 //		usuarioSeguridad.setKeyAutentificacion(dataPlataformaAutentificacion.get(UchileOrquestadorConstantes.getAplicacion()).getKeyAutentificacion());
 //		usuarioSeguridad.setIdEmpresa(dataPlataformaAutentificacion.get(UchileOrquestadorConstantes.getAplicacion()).getEnterpriseContext().getBasicContext().getIdEmpresa());

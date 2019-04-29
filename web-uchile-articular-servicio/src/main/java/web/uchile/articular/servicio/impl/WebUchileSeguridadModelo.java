@@ -9,7 +9,7 @@ import vijnana.respuesta.wrapper.request.ConsultaSeguridad;
 import vijnana.respuesta.wrapper.response.seguridad.AutentificacionResponse;
 import vijnana.respuesta.wrapper.response.seguridad.BasicContext;
 import vijnana.respuesta.wrapper.response.seguridad.sessionplataforma.SessionPlataforma;
-import vijnana.seguridad.orquestador.cliente.ClienteSeguridad;
+import vijnana.seguridad.orquestador.cliente.ClienteRestSeguridad;
 import vijnana.seguridad.orquestador.properties.VijnanaSeguridadProperties;
 import web.uchile.articular.servicio.utilidades.UchileOrquestadorConstantes;
 
@@ -19,34 +19,34 @@ public class WebUchileSeguridadModelo {
 
 	private VijnanaSeguridadProperties vijnanaSeguridadProperties = new VijnanaSeguridadProperties();
 	
-	private ClienteSeguridad clienteSeguridad = new ClienteSeguridad();
+	private ClienteRestSeguridad clienteRestSeguridad = new ClienteRestSeguridad();
 
 	//Aqui se setean las variables que van a ir a seguridad.
 	public WebUchileSeguridadModelo() {
 		super();
 		this.vijnanaSeguridadProperties = new VijnanaSeguridadProperties();
-		this.clienteSeguridad = new ClienteSeguridad();
+		this.clienteRestSeguridad = new ClienteRestSeguridad();
 	}
 	
 	
-	public SessionPlataforma obtenerUsuarioLogin(SessionPlataforma sessionPlataforma, String usernamePerfil, String passwordContrasenha) throws Exception{
+	public SessionPlataforma obtenerUsuarioLogin(SessionPlataforma sessionPlataforma, String usernamePerfil, String passwordContrasenha, int idRol) throws Exception{
 
 
 		ConsultaSeguridad consultaSeguridad = new ConsultaSeguridad();
 
 		consultaSeguridad.setDominioEmpresa(UchileOrquestadorConstantes.getDominioempresa()); // httpServletRequest.get
-		consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.getRolusuario());
+		consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.setRolUsuarioById(idRol));
 		//---------------------------------------
 //		consultaSeguridad.setNombreAplicacion(UchileOrquestadorConstantes.getAplicacion());
 		consultaSeguridad.setKeySeguridad(sessionPlataforma.getDataPlataformaAutentificacion().get("seguridad").getEnterpriseContext().getKeyEnterprise());
 
 		//ir a buscar todos los metodos que van a ser utilizados
 
-		clienteSeguridad = new ClienteSeguridad(usernamePerfil, passwordContrasenha,
+		clienteRestSeguridad = new ClienteRestSeguridad(usernamePerfil, passwordContrasenha,
 				vijnanaSeguridadProperties.getVijnanaClientTimeoutConexion(),
 				vijnanaSeguridadProperties.getVijnanaClientReadConexion());
 		
-		AutentificacionResponse autentificacionResponse = clienteSeguridad.postConsultaSeguridad(consultaSeguridad, vijnanaSeguridadProperties.getVijnanaServidor(), vijnanaSeguridadProperties.getLocalObtenerUsuarioLogin());
+		AutentificacionResponse autentificacionResponse = clienteRestSeguridad.post(consultaSeguridad, vijnanaSeguridadProperties.getVijnanaServidor(), vijnanaSeguridadProperties.getLocalObtenerUsuarioLogin());
 
 		if(autentificacionResponse!=null && autentificacionResponse.getBasicContext()!=null){
 			sessionPlataforma.setDataUsuarioBasic(new HashMap<String, BasicContext>());  

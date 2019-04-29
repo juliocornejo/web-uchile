@@ -19,15 +19,12 @@ import com.manashiki.uchilearte.servdto.dto.entities.formulario.SolicitudCertifi
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.TipoCertificadoDTO;
 import com.manashiki.uchilearte.servdto.request.RequestProductoDTO;
 
-import vijnana.respuesta.wrapper.request.ConsultaSeguridad;
-import vijnana.seguridad.orquestador.exception.WebImplException;
 import vijnana.utilidades.component.utilidades.AppDate;
 import vijnana.utilidades.component.utilidades.TipoFormatoFecha;
 import vijnana.utilidades.component.utilidades.ValidacionPatrones;
 import web.uchile.articular.servicio.impl.SolicitudesUchileModelo;
 import web.uchile.articular.servicio.properties.WebUchileProperties;
-import web.uchile.articular.servicio.utilidades.UchileOrquestadorConstantes;
-
+import web.uchile.articular.session.model.ResponseWebUchile;
 
 public class SolicitudCertificadoImpl {
 
@@ -117,15 +114,15 @@ public class SolicitudCertificadoImpl {
 	 */
 	public void generarValoresFormulario(){
 		
-		SolicitudesUchileModelo solicitudesModelo = new SolicitudesUchileModelo();
+		SolicitudesUchileModelo solicitudesUchileModelo = new SolicitudesUchileModelo();
 		
 		inicializarDisabled();
 
-		listarProgramasUniversidadDTO(solicitudesModelo);
+		listarProgramasUniversidadDTO(solicitudesUchileModelo);
 
-		listarTipoCertificadoDTO(solicitudesModelo);
+		listarTipoCertificadoDTO(solicitudesUchileModelo);
 
-		listarFinalidadCertificadoDTO(solicitudesModelo);
+		listarFinalidadCertificadoDTO(solicitudesUchileModelo);
 
 		inicializarBotonPago();
 		
@@ -141,30 +138,30 @@ public class SolicitudCertificadoImpl {
 //		objLog.info("FIN - inicializarDisabled");
 	}
 	
-	public void listarProgramasUniversidadDTO(SolicitudesUchileModelo solicitudesModelo){
+	public void listarProgramasUniversidadDTO(SolicitudesUchileModelo solicitudesUchileModelo){
 
 		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
 		/**Traer Activos*/
-		retListaProgramaUniversidadDTO  = solicitudesModelo.listarProgramasUniversidadOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaProgramaUniversidadDTO  = solicitudesUchileModelo.listarProgramasUniversidadOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
 	}
 
 	//Ordenado
-	public void listarTipoCertificadoDTO(SolicitudesUchileModelo solicitudesModelo){
+	public void listarTipoCertificadoDTO(SolicitudesUchileModelo solicitudesUchileModelo){
 
 		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
 
-		retListaTipoCertificadoDTO  = solicitudesModelo.listarTipoCertificadoOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaTipoCertificadoDTO  = solicitudesUchileModelo.listarTipoCertificadoOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaTipoCertificado(retListaTipoCertificadoDTO);
 	}
 
-	public void listarFinalidadCertificadoDTO(SolicitudesUchileModelo solicitudesModelo){
+	public void listarFinalidadCertificadoDTO(SolicitudesUchileModelo solicitudesUchileModelo){
 
 		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
 
-		retListaFinalidadCertificadoDTO = solicitudesModelo.listarFinalidadCertificadoOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaFinalidadCertificadoDTO = solicitudesUchileModelo.listarFinalidadCertificadoOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaFinalidadCertificado(retListaFinalidadCertificadoDTO);
 	}
@@ -197,14 +194,14 @@ public class SolicitudCertificadoImpl {
 		//		objLog.info("INI - validarLlenadoFormulario");
 		boolean validar = false;
 
-		if(solicitudCertificadoDTO.getNombrePersonaSolicitudCertificado()!=null && !solicitudCertificadoDTO.getNombrePersonaSolicitudCertificado().equals("")){
-			if(solicitudCertificadoDTO.getApellidoPaternoPersonaSolicitudCertificado()!=null && !solicitudCertificadoDTO.getApellidoPaternoPersonaSolicitudCertificado().equals("")){
-				if(solicitudCertificadoDTO.getApellidoMaternoPersonaSolicitudCertificado()!=null && !solicitudCertificadoDTO.getApellidoMaternoPersonaSolicitudCertificado().equals("")){
-					if(solicitudCertificadoDTO.getRutPersonaSolicitudCertificado()!=null && !solicitudCertificadoDTO.getRutPersonaSolicitudCertificado().equals("")){
+		if(solicitudCertificadoDTO.getNombrePersonaSolicitudCertificado()!=null && !"".equals(solicitudCertificadoDTO.getNombrePersonaSolicitudCertificado())){
+			if(solicitudCertificadoDTO.getApellidoPaternoPersonaSolicitudCertificado()!=null && !"".equals(solicitudCertificadoDTO.getApellidoPaternoPersonaSolicitudCertificado())){
+				if(solicitudCertificadoDTO.getApellidoMaternoPersonaSolicitudCertificado()!=null && !"".equals(solicitudCertificadoDTO.getApellidoMaternoPersonaSolicitudCertificado())){
+					if(solicitudCertificadoDTO.getRutPersonaSolicitudCertificado()!=null && !"".equals(solicitudCertificadoDTO.getRutPersonaSolicitudCertificado())){
 						if(solicitudCertificadoDTO.getIdProgramaUniversidad()!= 0 ){
-							if(solicitudCertificadoDTO.getMailMember()!=null && !solicitudCertificadoDTO.getMailMember().equals("")){
+							if(solicitudCertificadoDTO.getMailMember()!=null && !"".equals(solicitudCertificadoDTO.getMailMember())){
 								if(ValidacionPatrones.validarPatronEmail(solicitudCertificadoDTO.getMailMember())){	
-									if(solicitudCertificadoDTO.getAnhoIngreso()!=null && !solicitudCertificadoDTO.getAnhoIngreso().equals("")){
+									if(solicitudCertificadoDTO.getAnhoIngreso()!=null && !"".equals(solicitudCertificadoDTO.getAnhoIngreso())){
 										if(solicitudCertificadoDTO.getIdTipoCertificado()!=0){
 											if(solicitudCertificadoDTO.getIdFinalidadCertificado()!=0){
 												validar = true;
@@ -258,23 +255,24 @@ public class SolicitudCertificadoImpl {
 	 * @return void.
 	 * no lanza Excepciones.
 	 */
-	public boolean almacenarSolicitudCertificadoPagoOffline() throws IOException {
+	public ResponseWebUchile almacenarSolicitudCertificadoPagoOffline() throws IOException {
 		//Almacenar y redirigir a exito.xhtml
 		String paginaRedireccion = "/exito.xhtml";
 		if(generarAplicacion.getAuthenticacionContext()!=null){
-			return almacenarSolicitudPostulacion(paginaRedireccion, false);
+			if(almacenarSolicitudPostulacion(paginaRedireccion, false)){
+				return new ResponseWebUchile("web-uchile-front-solicitudes/main/view/solicitud-certificado-exito.jsp", true);
+				
+			}
 		}
-		return false;
+		return new ResponseWebUchile(false);
 	}
 
-	public boolean almacenarSolicitudCertificadoPagoOnline() throws IOException {
+	public ResponseWebUchile almacenarSolicitudCertificadoPagoOnline() throws IOException {
 		//Almacenar y redirigir a pago.xhtml
-		String paginaRedireccion = "/pago.xhtml";
-
 		if(generarAplicacion.getAuthenticacionContext()!=null){
-			return almacenarSolicitudPostulacion(paginaRedireccion, true);
+			return new ResponseWebUchile("web-uchile-front-solicitudes/main/view/pago.xhtml", true);
 		}
-		return false;
+		return new ResponseWebUchile(false);
 	}
 	
 	/*AlmacenarSolicitud recibe Online y Offline, envio Correo o sin envio*/
@@ -316,19 +314,10 @@ public class SolicitudCertificadoImpl {
 				solicitudCertificadoDTO.getIdFinalidadCertificado()+","+solicitudCertificadoDTO.getIdProgramaUniversidad()+","+solicitudCertificadoDTO.getIdTipoCertificado());
 				objLog.info("-------------------------");
 				
-				SolicitudesUchileModelo solicitudesModelo = new SolicitudesUchileModelo();
+				SolicitudesUchileModelo solicitudesUchileModelo = new SolicitudesUchileModelo();
 
-				RequestProductoDTO requestProductoDTO = solicitudesModelo.almacenarSolicitudCertificado(generarAplicacion.getAuthenticacionContext(), solicitudCertificadoDTO);
+				RequestProductoDTO requestProductoDTO = solicitudesUchileModelo.almacenarSolicitudCertificado(generarAplicacion.getAuthenticacionContext(), solicitudCertificadoDTO);
 				
-				objLog.info("A1: creando Solicitud");
-//				UchileArte uchileArte = clienteRest.post(requestProductoDTO, propertiesAplicacion.getLocalCrearSolicitudCertificado());
-				//##################################################
-//				String ipServer = PropertiesAplicacion.getVijnanaServidor();
-//				//		String ipServer = "localhost:8080";
-//				ClienteWsRestUtilidades clienteWsRestUtilidades = new ClienteWsRestUtilidades();
-//
-//				UchileArte uchileArte = clienteWsRestUtilidades.crearSolicitudCertificado(requestProductoDTO, ipServer);
-				//##################################################
 				if(requestProductoDTO!=null){
 					requestProductoDTO.getSolicitudCertificadoDTO().setIdSolicitudCertificado(requestProductoDTO.getSolicitudCertificadoDTO().getIdSolicitudCertificado());
 //					requestProductoDTO.getSolicitudCertificadoDTO().setProgramaUniversidad(obtenerProgramaUniversidad(solicitudCertificadoDTO.getIdProgramaUniversidad()));
@@ -339,7 +328,7 @@ public class SolicitudCertificadoImpl {
 //					String key = ClienteRestUtilidades.generacionSolicitudCertificadoSHA(requestProductoDTO);
 
 					if(flujoEnviarCorreo==true && aplicacionEnviarCorreo==true ){
-						solicitudesModelo.enviarEmailSolicitudAcademica(generarAplicacion.getAuthenticacionContext(),requestProductoDTO);
+						solicitudesUchileModelo.enviarEmailSolicitudAcademica(generarAplicacion.getAuthenticacionContext(),requestProductoDTO);
 						objLog.info("A2: Envio Email true");
 					}else{
 						objLog.info("A2: Envio Email false");
@@ -381,20 +370,7 @@ public class SolicitudCertificadoImpl {
 			}catch(Exception e){
 				e.printStackTrace();
 				objLog.info("ERROR - almacenarSolicitudAcademica:"+solicitudCertificadoDTO.getRutPersonaSolicitudCertificado()+" - "+e.getMessage());
-				return false;
 			}
-
-//			inicializarFormulario();
-//
-//			objLog.info("A4: Redireccion a "+paginaRedireccion);
-//
-//			if(flujoPagoOnline == true && aplicacionPagoOnline==true && online == true){
-//				//Navigation.redirectExterno(paginaRedireccion);
-//				return true;
-//			}else{
-//				return false;
-//				//Navigation.redirectInterno(paginaRedireccion);
-//			}
 		}
 
 		objLog.info("A5: Fin almacenarSolicitudCertificado");

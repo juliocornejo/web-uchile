@@ -38,11 +38,12 @@
     <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.LoginController</servlet-class>
     <load-on-startup>5</load-on-startup>
   </servlet>
-   <servlet>
-    <servlet-name>AdministracionSolicitudCertificado</servlet-name>
-    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.AdministracionSolicitudCertificadoController</servlet-class>
+  <servlet>
+    <servlet-name>Administracion</servlet-name>
+    <servlet-class>com.manashiki.uchilearte.solicitud.web.controller.AdministracionSolicitudController</servlet-class>
     <load-on-startup>5</load-on-startup>
   </servlet>
+
 
   <servlet-mapping>
     <servlet-name>SolicitudRestService</servlet-name>
@@ -70,8 +71,8 @@
   </servlet-mapping>
   	
     <servlet-mapping>
-    <servlet-name>AdministracionSolicitudCertificado</servlet-name>
-    <url-pattern>/administracion-certificado/*</url-pattern>
+    <servlet-name>Administracion</servlet-name>
+    <url-pattern>/administracion-solicitudes/*</url-pattern>
   </servlet-mapping>
 	
 <!-- 	  <servlet-mapping> -->

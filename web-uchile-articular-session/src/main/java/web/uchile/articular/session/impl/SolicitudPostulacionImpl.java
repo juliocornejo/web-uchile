@@ -30,6 +30,7 @@ import vijnana.utilidades.component.utilidades.GenerarAlmacenamientoArchivos;
 import vijnana.utilidades.component.utilidades.ValidacionPatrones;
 import web.uchile.articular.servicio.impl.SolicitudesUchileModelo;
 import web.uchile.articular.servicio.properties.WebUchileProperties;
+import web.uchile.articular.session.model.ResponseWebUchile;
 
 
 public class SolicitudPostulacionImpl {
@@ -185,7 +186,7 @@ public class SolicitudPostulacionImpl {
 		// Mostrar Todo
 		SolicitudesUchileModelo solicitudesModelo = new SolicitudesUchileModelo();
 
-		retListaProgramaUniversidadPostulacionDTO = solicitudesModelo.listarProgramasUniversidadPostulacionOrdenDTO(generarAplicacion.getAuthenticacionContext());
+		retListaProgramaUniversidadPostulacionDTO = solicitudesModelo.listarProgramasUniversidadPostulacionOrden(generarAplicacion.getAuthenticacionContext());
 
 		setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
 
@@ -196,7 +197,7 @@ public class SolicitudPostulacionImpl {
 		// Mostrar Todo
 		SolicitudesUchileModelo solicitudesModelo = new SolicitudesUchileModelo();
 
-		retListaRegionDTO = solicitudesModelo.listarRegionDTO(generarAplicacion.getAuthenticacionContext());
+		retListaRegionDTO = solicitudesModelo.listarRegion(generarAplicacion.getAuthenticacionContext());
 
 		setListaRegionesDTO(retListaRegionDTO);
 	}
@@ -305,16 +306,16 @@ public class SolicitudPostulacionImpl {
 
 		boolean validar = false;
 
-		if(solicitudPostulacionDTO.getNombrePersonaSolicitudPostulacion()!=null && !solicitudPostulacionDTO.getNombrePersonaSolicitudPostulacion().equals("")){
-			if(solicitudPostulacionDTO.getApellidoPaternoPersonaSolicitudPostulacion()!=null && !solicitudPostulacionDTO.getApellidoPaternoPersonaSolicitudPostulacion().equals("")){
-				if(solicitudPostulacionDTO.getApellidoMaternoPersonaSolicitudPostulacion()!=null && !solicitudPostulacionDTO.getApellidoMaternoPersonaSolicitudPostulacion().equals("")){
+		if(solicitudPostulacionDTO.getNombrePersonaSolicitudPostulacion()!=null && !"".equals(solicitudPostulacionDTO.getNombrePersonaSolicitudPostulacion())){
+			if(solicitudPostulacionDTO.getApellidoPaternoPersonaSolicitudPostulacion()!=null && !"".equals(solicitudPostulacionDTO.getApellidoPaternoPersonaSolicitudPostulacion())){
+				if(solicitudPostulacionDTO.getApellidoMaternoPersonaSolicitudPostulacion()!=null && !"".equals(solicitudPostulacionDTO.getApellidoMaternoPersonaSolicitudPostulacion())){
 					if(solicitudPostulacionDTO.getIdProgramaUniversidadPostulacion()!= 0 ){
-						if(solicitudPostulacionDTO.getRutPersonaSolicitudPostulacion()!=null && !solicitudPostulacionDTO.getRutPersonaSolicitudPostulacion().equals("")){
-							if(solicitudPostulacionDTO.getFechaNacimiento()!=null && !solicitudPostulacionDTO.getFechaNacimiento().equals("")){
-								if(solicitudPostulacionDTO.getMailMember()!=null && !solicitudPostulacionDTO.getMailMember().equals("")){
+						if(solicitudPostulacionDTO.getRutPersonaSolicitudPostulacion()!=null && !"".equals(solicitudPostulacionDTO.getRutPersonaSolicitudPostulacion())){
+							if(solicitudPostulacionDTO.getFechaNacimiento()!=null && !"".equals(solicitudPostulacionDTO.getFechaNacimiento())){
+								if(solicitudPostulacionDTO.getMailMember()!=null && !"".equals(solicitudPostulacionDTO.getMailMember())){
 									if(ValidacionPatrones.validarPatronEmail(solicitudPostulacionDTO.getMailMember())){	
-										if(solicitudPostulacionDTO.getTituloProfesional()!=null && !solicitudPostulacionDTO.getTituloProfesional().equals("")){
-											if(solicitudPostulacionDTO.getEntidadEducacional()!=null && !solicitudPostulacionDTO.getEntidadEducacional().equals("")){
+										if(solicitudPostulacionDTO.getTituloProfesional()!=null && !"".equals(solicitudPostulacionDTO.getTituloProfesional())){
+											if(solicitudPostulacionDTO.getEntidadEducacional()!=null && !"".equals(solicitudPostulacionDTO.getEntidadEducacional())){
 												if(getArchivoSolicitudPostulacionDTO()==null){
 													objLog.warn("Deben adjuntarse los documentos obligatorios para la postulación");
 													//FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -380,28 +381,30 @@ public class SolicitudPostulacionImpl {
 	boolean enviarCorreo = false;
 	boolean online = false;
 	
-	public boolean almacenarSolicitudPostulacionPagoOffline() throws IOException {
+	public ResponseWebUchile almacenarSolicitudPostulacionPagoOffline() throws IOException {
 		//Almacenar y redirigir a exito.xhtml
-		String paginaRedireccion = "/exito.xhtml";
 		if(generarAplicacion.getAuthenticacionContext()!=null){
-			return almacenarSolicitudPostulacion(paginaRedireccion, enviarCorreo, false);
+			if(  almacenarSolicitudPostulacion( enviarCorreo, false)){
+				return new ResponseWebUchile("web-uchile-front-solicitudes/main/view/solicitud-postulacion-exito.jsp", true);
+			}
 		}
-		return false;
+		return new ResponseWebUchile(false);
 	}
 	
-	public boolean almacenarSolicitudPostulacionPagoOnline() throws IOException {
+	public ResponseWebUchile almacenarSolicitudPostulacionPagoOnline() throws IOException {
 		//Almacenar y redirigir a pago.xhtml
-		String paginaRedireccion = "/pago.xhtml";
 		if(generarAplicacion.getAuthenticacionContext()!=null){
-			return almacenarSolicitudPostulacion(paginaRedireccion, enviarCorreo, true);
+			if( almacenarSolicitudPostulacion(enviarCorreo, true)){
+				return new ResponseWebUchile("/pago.xhtml", true);
+			}
 		}
-		return false;
+		return new ResponseWebUchile(false);
 
 	}
 
 
 
-	public boolean  almacenarSolicitudPostulacion(String paginaRedireccion, boolean enviarCorreo, boolean online) throws IOException { 
+	public boolean  almacenarSolicitudPostulacion(boolean enviarCorreo, boolean online) throws IOException { 
 
 		boolean validar = false;
 
@@ -479,8 +482,6 @@ public class SolicitudPostulacionImpl {
 				return false;
 			}
 			iniciliazarFormulario();
-
-			objLog.info("A4: Redireccion a "+paginaRedireccion);
 
 			if(flujoPagoOnline == true && aplicacionPagoOnline==true && online == true){
 				//Navigation.redirectExterno(paginaRedireccion);

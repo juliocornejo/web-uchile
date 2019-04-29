@@ -31,13 +31,11 @@ public class LoginController extends HttpServlet {
         super();
         
     }
-	
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		
 		logger.info("Inicializando Login Controller.");
 		try {
@@ -47,23 +45,25 @@ public class LoginController extends HttpServlet {
 			if(loginImpl.getGenerarAplicacion().getAuthenticacionContext()!=null){
 				String login = g.toJson(loginImpl.getLoginDTO());
 				
-				logger.info(login);
-					
 				request.setAttribute("login", login);
 				request.setAttribute("ficha", "{'ficha':'"+loginImpl.getGenerarAplicacion().getToken()+"'}");
 				request.setAttribute("Error", "{'mensajeError':''}");
-				request.getRequestDispatcher("/main/view/login/login.jsp").forward(request, response);
-				logger.info("Pintando Solicitud de certificados.");
+				request.getRequestDispatcher("/main/login/view/login.jsp").forward(request, response);
+				logger.info("Pintando Login Controller");
+				
+			}else{
+				request.setAttribute("Error", "{'mensajeError':'Aplicacion Invalida'}");
+				request.getRequestDispatcher("/administracion/error/login-error.jsp").forward(request, response);
+				logger.info("Pintando Error Login Controller. Aplicacion Invalida");
 			}
-	
 		} 
 		catch (Exception e) {
 			logger.error("Exception: "+e.getMessage(), e);
 			request.setAttribute("login", "{}");
 			request.setAttribute("ficha", "{}");
 			request.setAttribute("Error", "{'mensajeError':'Error de los servicios interno'}");
-			request.getRequestDispatcher("/main/view/login/login.jsp").forward(request, response);
-			logger.info("Pintando Solicitud de certificados.");
+			request.getRequestDispatcher("/login/error/login-error.jsp").forward(request, response);
+			logger.info("Pintando Error Login Controller. Error de los servicios interno");
 		}
 	}
 

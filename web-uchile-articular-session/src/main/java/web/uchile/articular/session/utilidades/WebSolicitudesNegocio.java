@@ -382,7 +382,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	public LoginModel validarDocumentoIdentificacion(LoginModel loginModel, SelectItem[] listaDocumentoIdentificacion) throws Exception{
 
-		if(loginModel.getSelecDocumento()!=null && !loginModel.getSelecDocumento().equals("")){
+		if(loginModel.getSelecDocumento()!=null && !"".equals(loginModel.getSelecDocumento())){
 			for(SelectItem doc: listaDocumentoIdentificacion){
 				if(loginModel.getSelecDocumento().equals(doc.getValue()+"")){
 					loginModel.setTipoDocumento(doc.getLabel());
@@ -399,7 +399,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	/***** Validaciones del Formulario ****/
 	public LoginModel validarRutMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getRutMember()!=null && !loginModel.getRutMember().equals("")){
+		if(loginModel.getRutMember()!=null && !"".equals(loginModel.getRutMember())){
 			objLog.info("A nombre:"+loginModel.getRutMember());
 		}
 		else{
@@ -409,7 +409,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarNombreMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getNombreMember()!=null && !loginModel.getNombreMember().equals("")){
+		if(loginModel.getNombreMember()!=null && !"".equals(loginModel.getNombreMember())){
 			objLog.info("B nombre:"+loginModel.getNombreMember());
 		}
 		else{
@@ -419,7 +419,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarApellidoPaternoMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getApellidoPaternoMember()!=null && !loginModel.getApellidoPaternoMember().equals("")){
+		if(loginModel.getApellidoPaternoMember()!=null && !"".equals(loginModel.getApellidoPaternoMember())){
 			objLog.info("C Apellido Paterno:"+loginModel.getApellidoPaternoMember());
 		}
 		else{
@@ -429,7 +429,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarApellidoMaternoMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getApellidoMaternoMember()!=null && !loginModel.getApellidoMaternoMember().equals("")){
+		if(loginModel.getApellidoMaternoMember()!=null && !"".equals(loginModel.getApellidoMaternoMember())){
 			objLog.info("D Apellido Materno:"+loginModel.getApellidoMaternoMember());
 		}
 		else{
@@ -439,7 +439,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarBirthDay(LoginModel loginModel) throws Exception{
-		if(loginModel.getBirthDay()!=null && !loginModel.getBirthDay().equals("")){
+		if(loginModel.getBirthDay()!=null && !"".equals(loginModel.getBirthDay())){
 			objLog.info("BD Dia de Nacimiento:"+loginModel.getBirthDay());
 		}
 		else{
@@ -449,7 +449,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarBirthMonth(LoginModel loginModel) throws Exception{
-		if(loginModel.getBirthMonth()!=null && !loginModel.getBirthMonth().equals("")){
+		if(loginModel.getBirthMonth()!=null && !"".equals(loginModel.getBirthMonth())){
 			objLog.info("BM Mes de Nacimiento:"+loginModel.getBirthMonth());
 		}
 		else{
@@ -459,7 +459,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarBirthYear(LoginModel loginModel) throws Exception{
-		if(loginModel.getBirthYear()!=null && !loginModel.getBirthYear().equals("")){
+		if(loginModel.getBirthYear()!=null && !"".equals(loginModel.getBirthYear())){
 			objLog.info("BY Anho de Nacimiento:"+loginModel.getBirthYear());
 		}
 		else{
@@ -469,7 +469,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarTelefonoContactoMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getTelefonoContactoMember()!=null && !loginModel.getTelefonoContactoMember().equals("")){
+		if(loginModel.getTelefonoContactoMember()!=null && !"".equals(loginModel.getTelefonoContactoMember())){
 			objLog.info("F Telefono de Contacto:"+loginModel.getTelefonoContactoMember());
 		}
 		else{
@@ -479,7 +479,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	}
 	public LoginModel validarMailMember(LoginModel loginModel) throws Exception{
-		if(loginModel.getMailMember()!=null && !loginModel.getMailMember().equals("")){
+		if(loginModel.getMailMember()!=null && !"".equals(loginModel.getMailMember())){
 			objLog.info("G Email de Contacto:"+loginModel.getMailMember());
 		}
 		else{
@@ -490,7 +490,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	public LoginModel validarGeneroMember(LoginModel loginModel, SelectItem[] listaGenero) throws Exception{
 
-		if(loginModel.getSelecGenero()!=null && !loginModel.getSelecGenero().equals("")){
+		if(loginModel.getSelecGenero()!=null && !"".equals(loginModel.getSelecGenero())){
 			for(SelectItem gen:listaGenero){
 				if(loginModel.getSelecGenero().equals(gen.getValue()+"")){
 					loginModel.setGeneroMember(gen.getLabel());
@@ -506,7 +506,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 	}
 
 	public LoginModel validarFirmaMember(LoginModel loginModel, int largoFirma) throws Exception{
-		if(loginModel.getFirmaMember()!=null && !loginModel.getFirmaMember().equals("")){
+		if(loginModel.getFirmaMember()!=null && !"".equals(loginModel.getFirmaMember())){
 			if(loginModel.getFirmaMember().length()>largoFirma){
 				loginModel.setFirmaMember(loginModel.getFirmaMember().substring(0,largoFirma));
 			}
@@ -519,7 +519,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	}
 	public LoginModel validarUsernamePerfil(LoginModel loginModel) throws Exception{
-		if(loginModel.getUsernamePerfil()!=null && !loginModel.getUsernamePerfil().equals("")){
+		if(loginModel.getUsernamePerfil()!=null && !"".equals(loginModel.getUsernamePerfil())){
 			objLog.info("J Username:"+loginModel.getUsernamePerfil());
 		}
 		else{
@@ -528,7 +528,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 		return loginModel;
 	}
 	public LoginModel validarNombrePerfilLowerCase(LoginModel loginModel) throws Exception{
-		if(loginModel.getNombrePerfilLowerCase()!=null && !loginModel.getNombrePerfilLowerCase().equals("")){
+		if(loginModel.getNombrePerfilLowerCase()!=null && !"".equals(loginModel.getNombrePerfilLowerCase())){
 			objLog.info("K NombrePerfilLowerCase:"+loginModel.getNombrePerfilLowerCase());
 		}
 		else{
@@ -538,7 +538,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 		return loginModel;
 	}
 	public LoginModel validarPasswordContrasenha(LoginModel loginModel) throws Exception{
-		if(loginModel.getPasswordContrasenha()!=null && !loginModel.getPasswordContrasenha().equals("")){
+		if(loginModel.getPasswordContrasenha()!=null && !"".equals(loginModel.getPasswordContrasenha())){
 			objLog.info("L PasswordContraseña:"+loginModel.getPasswordContrasenha());
 		}
 		else{
@@ -547,7 +547,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 		return loginModel;
 	}
 	public LoginModel validarPasswordConfirmacionContrasenha(LoginModel loginModel) throws Exception{
-		if(loginModel.getPasswordConfirmacionContrasenha()!=null && !loginModel.getPasswordConfirmacionContrasenha().equals("")){
+		if(loginModel.getPasswordConfirmacionContrasenha()!=null && !"".equals(loginModel.getPasswordConfirmacionContrasenha())){
 			objLog.info("M PasswordConfirmacionContrasenha:"+loginModel.getPasswordConfirmacionContrasenha());
 		}
 		else{
@@ -557,7 +557,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 
 	}
 	public LoginModel validarPasswordPregunta(LoginModel loginModel) throws Exception{
-		if(loginModel.getPasswordPregunta()!=null && !loginModel.getPasswordPregunta().equals("")){
+		if(loginModel.getPasswordPregunta()!=null && !"".equals(loginModel.getPasswordPregunta())){
 			objLog.info("O PasswordPregunta:"+loginModel.getPasswordPregunta());
 		}
 		else{
@@ -566,7 +566,7 @@ public class WebSolicitudesNegocio implements IWebSolicitudesNegocio, Serializab
 		return loginModel;
 	}
 	public LoginModel validarRespuestaPregunta(LoginModel loginModel) throws Exception{
-		if(loginModel.getRespuestaPregunta()!=null && !loginModel.getRespuestaPregunta().equals("")){
+		if(loginModel.getRespuestaPregunta()!=null && !"".equals(loginModel.getRespuestaPregunta())){
 			objLog.info("P RespuestaPregunta:"+loginModel.getRespuestaPregunta());
 		}
 		else{

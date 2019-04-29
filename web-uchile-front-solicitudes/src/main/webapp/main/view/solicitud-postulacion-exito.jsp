@@ -54,7 +54,7 @@
 </head>
 	<body class="body" ng-controller="SolicitudPostulacionExitoController" ng-init="leerSolicitudPostulacionExito(); data = {};">
 		<div class="banner">
-			<img src='/web-uchile-front-solicitudes/administracion-solicitudes/banner_1.jpg' border='0' alt="banner 1" />
+			<img src='/web-uchile-front-solicitudes/assets/images/banner_1.jpg' border='0' alt="banner 1" />
 		</div>		
 		<div class="main-container footer">
 			<div class="panel panel-default">

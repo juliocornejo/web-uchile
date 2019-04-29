@@ -2,14 +2,13 @@ package web.uchile.articular.session.impl;
 
 import vijnana.respuesta.wrapper.request.ConsultaSeguridad;
 import vijnana.seguridad.orquestador.exception.WebImplException;
-import vijnana.seguridad.orquestador.properties.VijnanaSeguridadProperties;
-import com.manashiki.seguridad.servdto.dto.entities.transferencia.ResponseSeguridad;
 import web.uchile.articular.servicio.utilidades.UchileOrquestadorConstantes;
 
 /*Esta Pagina Es Para la Creacion de Nuevos usuarios.*/
 public class GeneracionAplicacion {
 
 	protected vijnana.respuesta.wrapper.response.seguridad.AutentificacionContext authenticacionContext;
+	protected vijnana.respuesta.wrapper.response.seguridad.BasicContext basicContext;
 	protected String token;
 	protected String remoteHost;
 	
@@ -32,10 +31,10 @@ public class GeneracionAplicacion {
 			consultaSeguridad.setNombreAplicacion(UchileOrquestadorConstantes.getNombreaplicacionuchile());
 			consultaSeguridad.setNombreAplicacionSeguridad(UchileOrquestadorConstantes.getNombreaplicacionseguridad());
 			consultaSeguridad.setContrasenhaUsuarioEmpresa(UchileOrquestadorConstantes.getContrasenhausuarioempresa());
-			consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.getRolcontexto());
+			consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.setRolUsuarioById(4));
 			
 			//Si no existe token... generar el token por seguridad
-			if(token==null || token.equals("")){
+			if(token==null || "".equals(token)){
 				vijnana.wsrest.seguridad.Seguridad seguridad = new vijnana.wsrest.seguridad.Seguridad(consultaSeguridad);
 				
 				authenticacionContext = seguridad.getSessionPlataforma().getDataPlataformaAutentificacion().get(UchileOrquestadorConstantes.getNombreaplicacionuchile());
@@ -60,8 +59,6 @@ public class GeneracionAplicacion {
 		} 
 	}
 	
-	
-
 	public vijnana.respuesta.wrapper.response.seguridad.AutentificacionContext getAuthenticacionContext() {
 		return authenticacionContext;
 	}

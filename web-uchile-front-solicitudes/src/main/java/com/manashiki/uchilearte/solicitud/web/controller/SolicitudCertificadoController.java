@@ -60,7 +60,11 @@ public class SolicitudCertificadoController extends HttpServlet {
 				request.setAttribute("ficha", "{'ficha':'"+solicitudCertificadoImpl.getGenerarAplicacion().getToken()+"'}");
 				request.setAttribute("Error", "{'mensajeError':''}");
 				request.getRequestDispatcher("/main/view/solicitud-certificado.jsp").forward(request, response);
-				logger.info("Pintando Solicitud de certificados.");
+				logger.info("Pintando Solicitud de Certificados.");
+			}else{
+				request.setAttribute("Error", "{'mensajeError':'Usuario Invalido'}");
+				request.getRequestDispatcher("/administracion/administracion-error.jsp").forward(request, response);
+				logger.info("Pintando Error Solicitud de Certificados. Usuario Invalido");
 			}
 	
 		} 
@@ -71,7 +75,7 @@ public class SolicitudCertificadoController extends HttpServlet {
 			request.setAttribute("listaFinalidadCertificado", "[]");
 			request.setAttribute("Error", "{'mensajeError':'Error de los servicios interno'}");
 			request.getRequestDispatcher("/main/view/solicitud-certificado.jsp").forward(request, response);
-			logger.info("Pintando Solicitud de certificados.");
+			logger.info("Pintando Error Solicitud de Certificados. Error de los servicios interno");
 		}
 	}
 

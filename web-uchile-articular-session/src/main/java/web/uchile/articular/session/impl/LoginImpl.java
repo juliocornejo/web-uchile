@@ -1,17 +1,14 @@
 package web.uchile.articular.session.impl;
 
 
-import java.io.IOException;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.manashiki.seguridad.servdto.dto.entities.transferencia.ResponseSeguridad;
 
+import vijnana.respuesta.wrapper.response.seguridad.BasicContext;
 import web.uchile.articular.servicio.impl.LoginModelo;
-import web.uchile.articular.session.model.LoginModel;
+import web.uchile.articular.session.model.ResponseWebUchile;
 
 
 public class LoginImpl {
@@ -23,7 +20,7 @@ public class LoginImpl {
 	/******************/
 	private web.uchile.articular.session.model.LoginModel loginDTO;
 	
-	private String remoteAddr = ""; 
+	private String remoteAddr = "";
 	private String remoteHost= "";
 	
 	private GeneracionAplicacion generarAplicacion;
@@ -93,41 +90,47 @@ public class LoginImpl {
 //		objLog.info("FIN - inicializarDisabled");
 	}
 	
-	public LoginModel obtenerUsuarioLogin(String usernameLogin, String passwordLogin) {
+	
+	public ResponseWebUchile obtenerUsuarioLoginAdministrador(String usernameLogin, String passwordLogin) {
 		//Almacenar y redirigir a exito.xhtml
-		LoginModel loginModel = null;
+		return  obtenerUsuarioLogin(usernameLogin, passwordLogin, 3);
+		
+	}
+	
+	public ResponseWebUchile obtenerUsuarioLogin(String usernameLogin, String passwordLogin, int idRol) {
+		//Almacenar y redirigir a exito.xhtml
+		
 		LoginModelo loginModelo = new LoginModelo();
 		
-//		UchileArte uchileArte = null;
-//		generarAplicacion.generarLoginUsuario( loginDTO.getUsernamePerfil(), loginDTO.getPasswordContrasenha());
-		ResponseSeguridad responseSeguridad = loginModelo.generarLoginUsuario(generarAplicacion.getAuthenticacionContext(), usernameLogin, passwordLogin);
+		BasicContext basicContext = loginModelo.generarLoginUsuario(generarAplicacion.getAuthenticacionContext(), usernameLogin, passwordLogin, idRol);
 		
-		if(responseSeguridad!=null && responseSeguridad.getBasicContext()!=null){
-			responseSeguridad.getBasicContext();
-			loginModel = new LoginModel();
-			loginModel.setIdUsuario(responseSeguridad.getBasicContext().getIdUsuario());
-			loginModel.setUsernamePerfil(responseSeguridad.getBasicContext().getUsernamePerfil());
-			loginModel.setMailMember(responseSeguridad.getBasicContext().getMailPerfil());
-			loginModel.setUsernamePerfil(usernameLogin);
-			loginModel.setNombreMember(responseSeguridad.getBasicContext().getNombreMember());
-			loginModel.setApellidoPaternoMember(responseSeguridad.getBasicContext().getApellidoPaternoMember());
-			loginModel.setApellidoMaternoMember(responseSeguridad.getBasicContext().getApellidoMaternoMember());
-			loginModel.setAnonimo(responseSeguridad.getBasicContext().getAnonimo());
-			loginModel.setUltimaConexionPerfil(new Date());
-			loginModel.setRutMember(responseSeguridad.getBasicContext().getValueIdentificador());
-			objLog.info(responseSeguridad.getBasicContext().getIdUsuario()+" - "+responseSeguridad.getBasicContext().getIdEmpresa()+" - "+responseSeguridad.getBasicContext().getIdEmpresaUsuario());
+		if(basicContext!=null){
 			
-			token = responseSeguridad.getBasicContext().getKeyBasic();
+			if(basicContext.getIdUsuario()>0 && basicContext.getUsernamePerfil()!=null && !"".equals(basicContext.getUsernamePerfil()) &&
+					basicContext.getMailPerfil()!=null && !"".equals(basicContext.getMailPerfil()) && 
+					basicContext.getNombreMember()!=null && !"".equals(basicContext.getNombreMember()) &&
+					basicContext.getApellidoPaternoMember()!=null && !"".equals(basicContext.getApellidoPaternoMember()) &&
+					basicContext.getApellidoMaternoMember()!=null && !"".equals(basicContext.getApellidoMaternoMember()) &&
+							basicContext.getKeyBasic()!=null && !"".equals(basicContext.getKeyBasic()) &&
+								basicContext.getIdRol()>0 && idRol ==basicContext.getIdRol()){
+					
+				objLog.info(basicContext.getIdUsuario()+" - "+basicContext.getIdEmpresa()+" - "+basicContext.getIdEmpresaUsuario());
+				
+				token = basicContext.getKeyBasic();
+					
+				return new ResponseWebUchile("administracion-solicitudes/", true);
+			}
 		}
 
-		return loginModel;
+		return null;
 	}
-
-	/********************* METODOS DE FUNCIONAMIENTO ******************************/
-	/******************GETTER y SETTER********************************************/
 
 	public int getSelecPrograma() {
 		return selecPrograma;
+	}
+
+	public void setSelecPrograma(int selecPrograma) {
+		this.selecPrograma = selecPrograma;
 	}
 
 	public web.uchile.articular.session.model.LoginModel getLoginDTO() {
@@ -136,18 +139,6 @@ public class LoginImpl {
 
 	public void setLoginDTO(web.uchile.articular.session.model.LoginModel loginDTO) {
 		this.loginDTO = loginDTO;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public void setSelecPrograma(int selecPrograma) {
-		this.selecPrograma = selecPrograma;
 	}
 
 	public String getRemoteAddr() {
@@ -173,5 +164,16 @@ public class LoginImpl {
 	public void setGenerarAplicacion(GeneracionAplicacion generarAplicacion) {
 		this.generarAplicacion = generarAplicacion;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	/********************* METODOS DE FUNCIONAMIENTO ******************************/
+	/******************GETTER y SETTER********************************************/
 	
 }

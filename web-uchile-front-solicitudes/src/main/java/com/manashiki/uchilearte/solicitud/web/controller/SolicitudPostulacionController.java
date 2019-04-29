@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.ProgramaUniversidadPostulacionDTO;
 import com.manashiki.uchilearte.servdto.dto.entities.formulario.RegionDTO;
 
-import web.uchile.articular.session.impl.SolicitudCertificadoImpl;
 import web.uchile.articular.session.impl.SolicitudPostulacionImpl;
 
 
@@ -75,24 +74,22 @@ public class SolicitudPostulacionController extends HttpServlet {
 						request.setAttribute("Archivo", "{'archivo':'No tiene Archivo'}");
 					}
 					
-					
-					
 				}catch (Exception e) {
 					logger.info("no contiene archivo, setear archivo vacio");
 					request.setAttribute("Archivo", "{'archivo':'No tiene Archivo'}");
 				}
-				logger.info("carga del archivo");
 				/*fin d ela verificacion*/
 				request.setAttribute("listaPrograma", listaPrograma);
 				request.setAttribute("listaRegiones", listaRegiones);
 				request.setAttribute("ficha", "{'ficha':'"+solicitudPostulacionImpl.getGenerarAplicacion().getToken()+"'}");
-				
 				request.setAttribute("Error", "{'mensajeError':''}");
+				request.getRequestDispatcher("/main/view/solicitud-postulacion.jsp").forward(request, response);
+				logger.info("Pintando Solicitud de Postulaciones");
+			}else{
+				request.setAttribute("Error", "{'mensajeError':'Usuario Invalido'}");
+				request.getRequestDispatcher("/administracion/administracion-error.jsp").forward(request, response);
+				logger.info("Pintando Error Solicitud de Postulaciones. Usuario Invalido");
 			}
-//			
-			request.getRequestDispatcher("/main/view/solicitud-postulacion.jsp").forward(request, response);
-			logger.info("Pintando pagina de Postulaciones del alumno.");
-	
 		} 
 		catch (Exception e) {
 			logger.error("Exception: "+e.getMessage(), e);
@@ -101,7 +98,7 @@ public class SolicitudPostulacionController extends HttpServlet {
 			request.setAttribute("Archivo", "{'archivo':'No tiene Archivo'}");
 			request.setAttribute("Error", "{'mensajeError':'Error de los servicios interno'}");
 			request.getRequestDispatcher("/main/view/solicitud-postulacion.jsp").forward(request, response);
-			logger.info("Pintando pagina de Postulaciones del alumno. pasando por el error.");
+			logger.info("Pintando Error Solicitud de Postulaciones. Error de los servicios interno");
 		}
 	}
 
